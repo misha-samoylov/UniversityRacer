@@ -139,6 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3ds\chunk\chunk.cpp" />
+    <ClCompile Include="3ds\chunk\file.cpp" />
+    <ClCompile Include="3ds\light\light3ds.cpp" />
+    <ClCompile Include="3ds\light\light3dsobject.cpp" />
+    <ClCompile Include="3ds\material\material3ds.cpp" />
+    <ClCompile Include="3ds\material\material3dsobject.cpp" />
+    <ClCompile Include="3ds\mesh\mesh3ds.cpp" />
+    <ClCompile Include="3ds\mesh\mesh3dsobject.cpp" />
+    <ClCompile Include="3ds\scene3ds.cpp" />
     <ClCompile Include="BaseApp.cpp" />
     <ClCompile Include="BaseModel.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -160,6 +169,16 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3ds\3ds.h" />
+    <ClInclude Include="3ds\chunk\chunk.h" />
+    <ClInclude Include="3ds\chunk\file.h" />
+    <ClInclude Include="3ds\light\light3ds.h" />
+    <ClInclude Include="3ds\light\light3dsobject.h" />
+    <ClInclude Include="3ds\material\material3ds.h" />
+    <ClInclude Include="3ds\material\material3dsobject.h" />
+    <ClInclude Include="3ds\mesh\mesh3ds.h" />
+    <ClInclude Include="3ds\mesh\mesh3dsobject.h" />
+    <ClInclude Include="3ds\scene3ds.h" />
     <ClInclude Include="BaseApp.h" />
     <ClInclude Include="BaseModel.h" />
     <ClInclude Include="Camera.h" />
