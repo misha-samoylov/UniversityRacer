@@ -1,6 +1,6 @@
-# UniversityRacer
+# UniversityRacerX
 
-UniversityRacer - simple racing game for educational purpose of working with computer science. This project is a fork [david-sabata/UniversityRacer](https://github.com/david-sabata/UniversityRacer) designed to improve the code.
+UniversityRacerX - simple racing game for educational purpose of working with computer science. This project is a fork [david-sabata/UniversityRacer](https://github.com/david-sabata/UniversityRacer) designed to improve the code.
 
 # System requirements
 
