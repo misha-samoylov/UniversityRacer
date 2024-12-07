@@ -1,13 +1,29 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
+#include <stdlib.h>
+#include <exception>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 
-#include "main.h"
+#ifdef _MSC_VER
+    #define _CRTDBG_MAP_ALLOC
+    #include <crtdbg.h>
+    #include "Debug.h"
+#endif
+
+#include <SDL.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_projection.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <GL/glew.h>
+#include <GL/glu.h>
+
+#include "Exceptions.h"
+#include "Utils.h"
+#include "BaseApp.h"
+#include "Game.h"
 
 #ifdef _DEBUG
 	#define new MYDEBUG_NEW
@@ -15,7 +31,6 @@
 
 using namespace std;
 
-// Pointer to active application instance, which will recieve and handle SDL events
 BaseApp* application = NULL;
 
 void PrintGLVersion()
@@ -75,9 +90,6 @@ SDL_Surface * init(unsigned width, unsigned height, unsigned color, unsigned dep
 
     return screen;	
 }
-
-
-
 
 // Simple main loop
 void mainLoop()
@@ -154,8 +166,6 @@ void mainLoop()
     }
 }
 
-
-
 int main(int /*argc*/, char ** /*argv*/) 
 {
 
@@ -196,7 +206,6 @@ int main(int /*argc*/, char ** /*argv*/)
 
     return EXIT_SUCCESS;
 }
-
 
 const char * getGlErrorString(GLenum error)
 {

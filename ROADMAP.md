@@ -3,7 +3,7 @@
 ## Remove unused code
 
 * [x] Remove GLEE lib
-* [ ] Remove unused preprocessor defines
+* [x] Remove unused preprocessor defines
 * [ ] Remove commented code
 * [ ] Remove commented unused information
 

@@ -1,12 +1,3 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
-
 #ifndef SHADOWVOLUMES_H
 #define SHADOWVOLUMES_H
 
@@ -16,18 +7,12 @@
 #include <algorithm>
 #include <string>
 
-#ifndef GLM_INCLUDED
-#define GLM_INCLUDED
 #include <glm/glm.hpp>
-# ifndef USE_ONE
-#	include <glm/gtc/matrix_projection.hpp>
-# endif
+#include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#endif
 
 #include <GL/glew.h>
-
 #include <GL/glu.h>
 
 #include "Debug.h"
