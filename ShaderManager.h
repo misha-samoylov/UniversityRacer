@@ -31,11 +31,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #endif
 
-#ifdef USE_GLEE
-# include <GL/GLee.h>
-#else
-# include <GL/glew.h>
-#endif
+#include <GL/glew.h>
 
 #include "Debug.h"
 #include "Exceptions.h"

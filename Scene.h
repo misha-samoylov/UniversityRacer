@@ -14,11 +14,7 @@
 #include <iostream>
 #include <map>
 
-#ifdef USE_GLEE
-# include <GL/GLee.h>
-#else
-# include <GL/glew.h>
-#endif
+#include <GL/glew.h>
 
 #include "Debug.h"
 #include "ModelContainer.h"
