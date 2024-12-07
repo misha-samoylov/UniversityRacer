@@ -2,9 +2,14 @@
 
 UniversityRacerX - simple racing game for educational purpose of working with computer science. This project is a fork [UniversityRacer](https://github.com/david-sabata/UniversityRacer) designed to improve the code.
 
+# Build
+
+1. Download and build dependencies
+2. Open `UniversityRacerX.sln` and build project
+
 # System requirements
 
-* Windows 10
+* Windows XP and above
 * OpenGL
 
 # Dependencies
