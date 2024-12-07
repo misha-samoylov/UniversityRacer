@@ -14,4 +14,4 @@ UniversityRacerX - simple racing game for educational purpose of working with co
 
 # License
 
-UniversityRacerX is licensed under the MIT License, see LICENSE.txt for more information.
+UniversityRacerX is licensed under the MIT License, see [LICENSE.txt](https://github.com/misha-samoylov/UniversityRacerX/blob/master/LICENSE.txt) for more information.
