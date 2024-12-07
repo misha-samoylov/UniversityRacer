@@ -17,12 +17,12 @@ Controls:
 * `Space` - handbrake
 * `R` - restart game
 * `Enter` - return to last checkpoint
-* `Tab` – switch between wireframe model with collision body highlighting and classic display
-* `F` – lock/unlock camera from car
+* `Tab` - switch between wireframe model with collision body highlighting and classic display
+* `F` - lock/unlock camera from car
 * `M` - lock the mouse to the application
 * `1`-`4` keys - turn individual lights on and off
-* `F5` – turn off rough surface generation on benches (perlin noise)
-* `F6` – turn off shadows
+* `F5` - turn off rough surface generation on benches (perlin noise)
+* `F6` - turn off shadows
 
 # System requirements
 
