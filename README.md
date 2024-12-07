@@ -11,3 +11,7 @@ UniversityRacerX - simple racing game for educational purpose of working with co
 
 * [SDL1](https://www.libsdl.org/)
 * [Bullet Physics 2.79 (rev2440)](https://code.google.com/archive/p/bullet/downloads)
+
+# License
+
+UniversityRacerX is licensed under the MIT License, see LICENSE.txt for more information.
