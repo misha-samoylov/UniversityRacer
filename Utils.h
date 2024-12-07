@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #ifdef USE_GLEE
 # include <GL/GLee.h>
 #else

@@ -9,8 +9,10 @@ UniversityRacerX - simple racing game for educational purpose of working with co
 
 # Dependencies
 
-* [SDL1](https://www.libsdl.org/)
+* [SDL 1.2](https://github.com/libsdl-org/SDL-1.2)
 * [Bullet Physics 2.79 (rev2440)](https://code.google.com/archive/p/bullet/downloads)
+* [glm 0.9.0.7](https://github.com/g-truc/glm/releases/tag/0.9.0.7)
+* [glew 2.2.0](https://github.com/nigels-com/glew/releases/tag/glew-2.2.0)
 
 # License
 

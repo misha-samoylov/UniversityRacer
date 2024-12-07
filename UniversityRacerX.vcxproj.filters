@@ -3,45 +3,15 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Resource Files\3ds">
-      <UniqueIdentifier>{13b9b932-5571-46f2-967f-ca5c7f763468}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\3ds\chunk">
-      <UniqueIdentifier>{0e504600-ec80-4ab3-8ead-a23aff5f5a4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\3ds\light">
-      <UniqueIdentifier>{21a28a68-b017-43ce-aa55-9bf4979fd1f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\3ds\material">
-      <UniqueIdentifier>{6671f674-4401-4f6a-8a98-ab5d16e46f13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\3ds\mesh">
-      <UniqueIdentifier>{0dbbf454-f108-47f6-bdd0-94ab59911353}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3ds">
-      <UniqueIdentifier>{7f9c7544-b181-4278-b695-ba808d69f876}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3ds\chunk">
-      <UniqueIdentifier>{7e0c5381-3b10-44d4-9ef5-d04da720e52f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3ds\light">
-      <UniqueIdentifier>{2956ee67-7fbb-495c-9c15-8d44505acaca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3ds\material">
-      <UniqueIdentifier>{5c6d5bcf-b141-467a-b871-b6f8a79c0eef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3ds\mesh">
-      <UniqueIdentifier>{7f2f8ab0-450c-4479-9061-8315599125b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,137 +64,143 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\scene3ds.cpp">
-      <Filter>Source Files\3ds</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\chunk\chunk.cpp">
-      <Filter>Source Files\3ds\chunk</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\chunk\file.cpp">
-      <Filter>Source Files\3ds\chunk</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\light\light3ds.cpp">
-      <Filter>Source Files\3ds\light</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\light\light3dsobject.cpp">
-      <Filter>Source Files\3ds\light</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\material\material3ds.cpp">
-      <Filter>Source Files\3ds\material</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\material\material3dsobject.cpp">
-      <Filter>Source Files\3ds\material</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\mesh\mesh3ds.cpp">
-      <Filter>Source Files\3ds\mesh</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="3ds\mesh\mesh3dsobject.cpp">
-      <Filter>Source Files\3ds\mesh</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseApp.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseModel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCounter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelContainer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCar.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCarConfig.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCheckpoint.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsDebugDraw.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsUtils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowVolumes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\scene3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\chunk\chunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\chunk\file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\light\light3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\light\light3dsobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\material\material3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\material\material3dsobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\mesh\mesh3ds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3ds\mesh\mesh3dsobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
       <Filter>Source Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BaseApp.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseModel.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Exceptions.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FpsCounter.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTime.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelContainer.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsCar.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsCarConfig.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsCheckpoint.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsDebugDraw.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsUtils.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderManager.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowVolumes.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\3ds.h">
-      <Filter>Resource Files\3ds</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\scene3ds.h">
-      <Filter>Resource Files\3ds</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\chunk\chunk.h">
-      <Filter>Resource Files\3ds\chunk</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\chunk\file.h">
-      <Filter>Resource Files\3ds\chunk</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\light\light3ds.h">
-      <Filter>Resource Files\3ds\light</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\light\light3dsobject.h">
-      <Filter>Resource Files\3ds\light</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\material\material3ds.h">
-      <Filter>Resource Files\3ds\material</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\material\material3dsobject.h">
-      <Filter>Resource Files\3ds\material</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\mesh\mesh3ds.h">
-      <Filter>Resource Files\3ds\mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="3ds\mesh\mesh3dsobject.h">
-      <Filter>Resource Files\3ds\mesh</Filter>
-    </ClInclude>
+    <None Include="LICENSE.txt">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="3ds\README">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

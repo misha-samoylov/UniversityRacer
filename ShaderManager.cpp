@@ -470,7 +470,7 @@ string ShaderManager::getShaderInfoLog(const GLuint shader)
     int length;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
     std::string log(length, ' ');
-    glGetShaderInfoLog(shader, length, NULL, &log[0]);
+    //glGetShaderInfoLog(shader, length, NULL, &log[0]);
     return log;
 }
 
@@ -480,7 +480,7 @@ string ShaderManager::getProgramInfoLog(const GLuint program)
     int length;
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
     std::string log(length, ' ');
-    glGetProgramInfoLog(program, length, NULL, &log[0]);
+    //glGetProgramInfoLog(program, length, NULL, &log[0]);
     return log;
 }
 

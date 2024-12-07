@@ -19,7 +19,7 @@
 #include <iterator>
 #include <algorithm>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #ifndef GLM_INCLUDED
 #define GLM_INCLUDED
