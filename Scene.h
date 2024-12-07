@@ -36,7 +36,7 @@ public:
 	 * Inicializace sceny;
 	 * Po inicializaci se jiz neprojevi nove pridana data!
 	 */
-	void init();
+	void Init();
 
 	/*
 	 * Vykresleni cele sceny

@@ -206,10 +206,15 @@ std::vector<Light> &ModelContainer::getLights()
 	return lights;
 }
 
-bool fileExists(std::string filename)
+bool FileExists(const char *filename)
 {
-	std::ifstream ifile(filename);
-	return (bool)ifile;
+	FILE* file;
+	if ((file = fopen(filename, "r")) != NULL) {
+		fclose(file);
+		return true;
+	}
+
+	return false;
 }
 
 BaseModel* ModelContainer::load3DS(std::string filename)
@@ -287,18 +292,18 @@ BaseModel* ModelContainer::load3DS(std::string filename)
 		// nacist textury do GL, pokud odpovidajici soubory existuji
 		// hleda se automaticky zakladni textura, normalova a vyskova
 		std::string path = ShaderManager::getTexturesPath();
-		if (fileExists(path + m.Texture())) {
+		if (FileExists((path + m.Texture()).c_str())) {
 			params.textures.push_back( ShaderManager::loadTexture(path + m.Texture()) );
 
 			std::string::size_type pos = m.Texture().find_last_of(".");
 			std::string baseName = m.Texture().substr(0, pos);
 
 			std::string normalTexture = path + baseName + TEX2_SUFFIX + TEX_EXT;
-			if (fileExists(normalTexture))
+			if (FileExists(normalTexture.c_str()))
 				params.textures.push_back( ShaderManager::loadTexture(normalTexture) );
 
 			std::string heightTexture = path + baseName + TEX3_SUFFIX + TEX_EXT;
-			if (fileExists(heightTexture))
+			if (FileExists(heightTexture.c_str()))
 				params.textures.push_back( ShaderManager::loadTexture(heightTexture) );
 		}
 

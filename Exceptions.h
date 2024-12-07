@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 
 
-const char * getGlErrorString(GLenum error); // Replacement for gluErrorString
+const char* getGlErrorString(GLenum error);
 
 struct SDL_Exception : public std::runtime_error
 {

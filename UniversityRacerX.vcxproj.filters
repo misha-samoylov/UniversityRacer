@@ -108,6 +108,9 @@
     <ClCompile Include="3ds\mesh\mesh3dsobject.cpp">
       <Filter>Header Files\3ds\mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Exceptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3ds\3ds.h">

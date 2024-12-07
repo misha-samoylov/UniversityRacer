@@ -48,7 +48,7 @@ std::vector<ModelContainer*> &Scene::getModelContainers()
 }
 
 
-void Scene::init()
+void Scene::Init()
 {
 	buildBufferObjects();
 

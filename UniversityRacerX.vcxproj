@@ -77,6 +77,7 @@
     <ClCompile Include="BaseApp.cpp" />
     <ClCompile Include="BaseModel.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="main.cpp" />

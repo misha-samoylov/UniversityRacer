@@ -366,7 +366,7 @@ void Game::onInit()
 
 	// vyrobit scenu
 	scene->addModelContainer(container);
-	scene->init();
+	scene->Init();
 
 	std::cout << "- constructing shadow volumes" << std::endl;
 
