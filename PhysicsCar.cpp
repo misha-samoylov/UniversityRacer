@@ -153,7 +153,7 @@ void PhysicsCar::Update(btScalar timeStep)
     
     // brakes
     m_vehicle->setBrake(m_breakingForce, WHEEL_REARLEFT);
-    m_vehicle->setBrake(m_breakingForce, WHEEL_REARLEFT);
+    m_vehicle->setBrake(m_breakingForce, WHEEL_REARRIGHT);
 
     // steering
     m_vehicle->setSteeringValue(m_vehicleSteering, WHEEL_FRONTLEFT);
