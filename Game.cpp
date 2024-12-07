@@ -1,14 +1,9 @@
 #include "Game.h"
 #include "Light.h"
 
-#define UNUSED_SHADER_ATTR -1
-#define WALK_SPEED 0.01f
-#define STATICS_SCALE 0.05f
-#define INTRO_TIME_MS 2000
-
 Game::Game(): mouseCaptured(false), drawWireframe(false), followCamera(true)
 {
-	drawShadows = true; // stiny defaultne zapnute
+	drawShadows = true;
 
 	gui = new Gui(windowWidth, windowHeight);
 	scene = new Scene(*this);
@@ -27,33 +22,32 @@ void Game::onInit()
 {
 	BaseApp::onInit();
 
-	std::cout << "The Game is loading:" << std::endl;
-
-	std::cout << "- loading models" << std::endl;
+	printf("The Game is loading:\n");
+	printf("- loading models");
 
 	// nacist modely	
-	container = new ModelContainer;	
+	container = new ModelContainer();
 
 	// modely pro kresleni
 	BaseModel* chairs = container->load3DS("models/chairs.3ds");
 	BaseModel* e112 = container->load3DS("models/e112.3ds");
 	BaseModel* middesk = container->load3DS("models/desk-mid.3ds");	
   	BaseModel* sidedesk = container->load3DS("models/desk-side.3ds");
-    BaseModel* car =  container->load3DS("models/car.3ds");
-    BaseModel* wheel =  container->load3DS("models/wheel.3ds");
-	BaseModel* plank =  container->load3DS("models/plank.3ds");
-    BaseModel* checkpoint =  container->load3DS("models/checkpoint.3ds");
+    BaseModel* car = container->load3DS("models/car.3ds");
+    BaseModel* wheel = container->load3DS("models/wheel.3ds");
+	BaseModel* plank = container->load3DS("models/plank.3ds");
+    BaseModel* checkpoint = container->load3DS("models/checkpoint.3ds");
 
-	std::cout << "- initializing physics" << std::endl;
+	printf("- initializing physics\n");
 
     physics = new Physics();
 
-    physics->AddCar(PhysicsUtils::btTransFrom(btVector3(36.2f, 8.95f, -21.7f), btQuaternion(btVector3(0, 1, 0), -M_PI/2.f))); // 0,2,5
+    physics->AddCar(PhysicsUtils::btTransFrom(btVector3(36.2f, 8.95f, -21.7f), btQuaternion(btVector3(0, 1, 0), -M_PI/2.f))); // 0, 2, 5
 
-   //physics->AddRigidBody(5., PhysicsUtils::btTransFrom(btVector3(0, 3, 1)), new btBoxShape(btVector3(0.75,0.75,0.75)))->setAngularVelocity(btVector3(1,1,1)); // TODO konstruktor se neprelozi kvuli Debug.h    
+	// physics->AddRigidBody(5., PhysicsUtils::btTransFrom(btVector3(0, 3, 1)), new btBoxShape(btVector3(0.75,0.75,0.75)))->setAngularVelocity(btVector3(1,1,1)); // TODO konstruktor se neprelozi kvuli Debug.h
 
-	std::cout << "- setting up drawing queue" << std::endl;
-		
+	printf("- setting up drawing queue");
+
 	// vykresli E112
 	if (1) {
 		container->addModel("e112", e112);
@@ -78,8 +72,7 @@ void Game::onInit()
 
         std::vector<btCollisionShape*> chairShapes = Physics::CreateStaticCollisionShapes(chairs, STATICS_SCALE);
 		
-		for (unsigned int rowI = 0; rowI < 5; rowI++)
-		{
+		for (unsigned int rowI = 0; rowI < 5; rowI++) {
 			int offsetX = 0; // posunuti zidle na radku
 
 			for (unsigned int i = 0; i < 13; i++)
@@ -362,7 +355,7 @@ void Game::onInit()
     }
 
 
-	std::cout << "- constructing scene" << std::endl;
+	printf("- constructing scene");
 
 	// vyrobit scenu
 	scene->addModelContainer(container);
@@ -544,8 +537,6 @@ void Game::onWindowRedraw(const GameTime & gameTime)
     SDL_GL_SwapBuffers(); 
 }
 
-
-
 void Game::drawLines(std::vector<PhysicsDebugDraw::LINE> & lines)
 {
     // vykresleni car -----------------------
@@ -648,7 +639,6 @@ void Game::handleActiveKeys(const GameTime & gameTime)
         physics->GetCar()->TurnRight();
 }
 
-
 void Game::onKeyDown(SDLKey key, Uint16 mod)
 {
 	BaseApp::onKeyDown(key, mod);
@@ -728,7 +718,6 @@ void Game::onKeyDown(SDLKey key, Uint16 mod)
 	}
 }
 
-
 void Game::onMouseMove(unsigned x, unsigned y, int xrel, int yrel, Uint8 buttons)
 {
 	BaseApp::onMouseMove(x, y, xrel, yrel, buttons);
@@ -747,13 +736,11 @@ void Game::onMouseMove(unsigned x, unsigned y, int xrel, int yrel, Uint8 buttons
 	}
 }
 
-
 void Game::onWindowResized(int w, int h)
 {
 	BaseApp::onWindowResized(w, h);
 	gui->updateScreenDimensions(w, h);
 }
-
 
 std::string Game::statsString()
 {

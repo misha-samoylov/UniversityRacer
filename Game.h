@@ -12,6 +12,11 @@
 #include "Physics.h"
 #include "ShadowVolumes.h"
 
+#define UNUSED_SHADER_ATTR -1
+#define WALK_SPEED 0.01f
+#define STATICS_SCALE 0.05f
+#define INTRO_TIME_MS 2000
+
 
 class Game : public BaseApp
 {
