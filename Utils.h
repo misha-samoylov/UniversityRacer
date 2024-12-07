@@ -6,7 +6,6 @@
 #include <SDL.h>
 #include <GL/glew.h>
 
-#include "Debug.h"
 #include "Exceptions.h"
 #include "GameTime.h"
 #include "FpsCounter.h"

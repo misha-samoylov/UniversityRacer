@@ -128,6 +128,26 @@
   <ItemGroup>
     <None Include="3ds\README" />
     <None Include="LICENSE.txt" />
+    <None Include="materials\carpet.frag" />
+    <None Include="materials\carpet.vert" />
+    <None Include="materials\ceiling.frag" />
+    <None Include="materials\ceiling.vert" />
+    <None Include="materials\clock.frag" />
+    <None Include="materials\clock.vert" />
+    <None Include="materials\desk.frag" />
+    <None Include="materials\desk.vert" />
+    <None Include="materials\diffuse.frag" />
+    <None Include="materials\diffuse.vert" />
+    <None Include="materials\glossy.frag" />
+    <None Include="materials\glossy.vert" />
+    <None Include="materials\gui.frag" />
+    <None Include="materials\gui.vert" />
+    <None Include="materials\line.frag" />
+    <None Include="materials\line.vert" />
+    <None Include="materials\povrchauta.frag" />
+    <None Include="materials\povrchauta.vert" />
+    <None Include="materials\test.frag" />
+    <None Include="materials\test.vert" />
     <None Include="README.md" />
     <None Include="ROADMAP.md" />
   </ItemGroup>

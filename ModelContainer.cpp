@@ -1,16 +1,11 @@
 #include "ModelContainer.h"
 #include <stdexcept>
 
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
 #define TEX2_SUFFIX "_normal"
 #define TEX3_SUFFIX "_height"
 #define TEX_EXT ".bmp"
 
 using namespace std;
-
 
 ModelContainer::ModelContainer(void)
 {
@@ -28,11 +23,6 @@ ModelContainer::~ModelContainer(void)
 }
 
 
-
-
-
-
-
 vector<BaseModel*> const &ModelContainer::getModels()
 {
 	return models;
@@ -48,10 +38,6 @@ vector<ModelContainer::MESHDRAWINGQUEUEITEM> const &ModelContainer::getMeshDrawi
 {
 	return meshDrawingQueue;
 }
-
-
-
-
 
 void ModelContainer::optimizeDrawingQueue()
 {

@@ -6,8 +6,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Debug.h"
-
 #define DEFAULT_AMBIENT glm::vec4(0.1, 0.1, 0.1, 1)
 #define DEFAULT_DIFFUSE glm::vec4(1, 1, 1, 1)
 

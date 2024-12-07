@@ -1,18 +1,10 @@
 #include "ShaderManager.h"
 
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
-using namespace std;
-
-
 #define DEFAULT_PROGRAM "diffuse"
-
 #define SHADERS_PATH "materials/"
 #define TEXTURES_PATH "materials/textures/"
 
-
+using namespace std;
 
 // init statickych promennych
 ShaderManager::PROGRAMBINDING ShaderManager::currentProgram;

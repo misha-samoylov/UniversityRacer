@@ -28,6 +28,9 @@
     <Filter Include="Header Files\3ds\mesh">
       <UniqueIdentifier>{2d4e7438-901a-4f3f-9825-370e2b2d6da9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\materials">
+      <UniqueIdentifier>{eb676934-2c2b-4fc4-b340-8a1097b4b711}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApp.cpp">
@@ -216,6 +219,66 @@
     </None>
     <None Include="ROADMAP.md">
       <Filter>Source Files</Filter>
+    </None>
+    <None Include="materials\carpet.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\carpet.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\ceiling.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\ceiling.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\clock.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\clock.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\desk.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\desk.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\diffuse.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\diffuse.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\glossy.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\glossy.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\gui.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\gui.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\line.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\line.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\povrchauta.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\povrchauta.vert">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\test.frag">
+      <Filter>Source Files\materials</Filter>
+    </None>
+    <None Include="materials\test.vert">
+      <Filter>Source Files\materials</Filter>
     </None>
   </ItemGroup>
 </Project>

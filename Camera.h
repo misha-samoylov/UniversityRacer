@@ -9,9 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/transform2.hpp>
 
-#include "Debug.h"
 #include "Utils.h"
-
 
 class Camera {
 

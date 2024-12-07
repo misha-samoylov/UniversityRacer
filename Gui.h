@@ -5,7 +5,6 @@
 #include <vector>
 #include <utility>
 
-#include "Debug.h"
 #include "ShaderManager.h"
 
 

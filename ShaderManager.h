@@ -19,7 +19,6 @@
 
 #include <GL/glew.h>
 
-#include "Debug.h"
 #include "Exceptions.h"
 
 

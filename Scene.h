@@ -7,7 +7,6 @@
 
 #include <GL/glew.h>
 
-#include "Debug.h"
 #include "ModelContainer.h"
 #include "ShaderManager.h"
 #include "Camera.h"

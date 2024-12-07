@@ -1,15 +1,8 @@
 #include "Scene.h"
 
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
-
 #define UNUSED_SHADER_ATTR -1
 
-
 using namespace std;
-
 
 /**
  * Jeden vrchol ve VBO slozeny ze souradnic, normaly a souradnic textury
@@ -22,16 +15,9 @@ typedef struct VBOENTRY {
 } VBOENTRY;
 
 
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
 Scene::Scene(BaseApp& parentApp) : application(parentApp)
 {	
 }
-
-
 
 Scene::~Scene() 
 {

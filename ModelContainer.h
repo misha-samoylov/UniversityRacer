@@ -7,7 +7,6 @@
 #include <vector>
 #include <fstream>
 
-#include "Debug.h"
 #include "BaseModel.h"
 #include "3ds/3ds.h"
 #include "ShaderManager.h"

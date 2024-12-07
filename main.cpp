@@ -7,7 +7,6 @@
 #ifdef _MSC_VER
     #define _CRTDBG_MAP_ALLOC
     #include <crtdbg.h>
-    #include "Debug.h"
 #endif
 
 #include <SDL.h>
@@ -24,10 +23,6 @@
 #include "Utils.h"
 #include "BaseApp.h"
 #include "Game.h"
-
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
 
 using namespace std;
 

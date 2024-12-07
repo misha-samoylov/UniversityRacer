@@ -6,11 +6,9 @@
 #include <sstream>
 #include <vector>
 
-#include "Debug.h"
 #include "BaseApp.h"
 #include "Scene.h"
 #include "Gui.h"
-#include "Debug.h"
 #include "Physics.h"
 #include "ShadowVolumes.h"
 

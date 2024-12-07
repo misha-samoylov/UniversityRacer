@@ -1,14 +1,7 @@
 #include "Mesh.h"
 #include <iostream>
 
-
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
 using namespace std;
-
-
 
 Mesh::Mesh(string name, string materialName, vector<glm::vec3> vertices, 
 	vector<glm::ivec3> faces, vector<glm::vec2> texcoords) : 

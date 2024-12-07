@@ -1,9 +1,5 @@
 #include "ShadowVolumes.h"
 
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
 // vypnout otravne warningy Visual Studia; nasim iteratorum verime :)
 #define _SCL_SECURE_NO_WARNINGS
 

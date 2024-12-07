@@ -1,11 +1,6 @@
 #include "Camera.h"
 
-#ifdef _DEBUG
-	#define new MYDEBUG_NEW
-#endif
-
 using namespace std;
-
 
 Camera::Camera(void): currentSettleTime(0.f) {
 	Reset();

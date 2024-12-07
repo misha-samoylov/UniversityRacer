@@ -2,7 +2,6 @@
 #define BASEMODEL_H
 
 #include <vector>
-#include "Debug.h"
 #include "Mesh.h"
 
 

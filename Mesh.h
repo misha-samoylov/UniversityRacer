@@ -11,7 +11,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderManager.h"
-#include "Debug.h"
 
 class Mesh
 {	

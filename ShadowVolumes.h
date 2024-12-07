@@ -15,7 +15,6 @@
 #include <GL/glew.h>
 #include <GL/glu.h>
 
-#include "Debug.h"
 #include "Mesh.h"
 #include "BaseModel.h"
 #include "ShaderManager.h"
