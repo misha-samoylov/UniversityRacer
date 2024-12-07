@@ -7,6 +7,23 @@ UniversityRacerX - simple racing game for educational purpose of working with co
 1. Download and build dependencies
 2. Open `UniversityRacerX.sln` and build project
 
+# Game
+
+Drive an RC car model through given checkpoints on the track in the shortest time.
+
+Controls:
+
+* `W`, `A`, `S`, `D` - control vehicle
+* `Space` - handbrake
+* `R` - restart game
+* `Enter` - return to last checkpoint
+* `Tab` – switch between wireframe model with collision body highlighting and classic display
+* `F` – lock/unlock camera from car
+* `M` - lock the mouse to the application
+* `1`-`4` keys - turn individual lights on and off
+* `F5` – turn off rough surface generation on benches (perlin noise)
+* `F6` – turn off shadows
+
 # System requirements
 
 * Windows XP and above
