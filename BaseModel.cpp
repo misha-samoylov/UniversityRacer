@@ -3,20 +3,16 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 BaseModel::~BaseModel() 
 {
 	// uvolnit z pameti vsechny meshe
-	for (vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+	for (std::vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
 	{
 		delete (*it);
 	}
 }
 
-
-
-void BaseModel::setMeshes(vector<Mesh*> meshes)
+void BaseModel::setMeshes(std::vector<Mesh*> meshes)
 {
 	this->meshes = meshes;
 
@@ -24,16 +20,14 @@ void BaseModel::setMeshes(vector<Mesh*> meshes)
 	faceCount = 0;
 
 	// spocitat vrcholy a facy
-	for (vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+	for (std::vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
 	{
 		vertexCount += (*it)->getVertices().size();
 		faceCount += (*it)->getFaces().size();
 	}
 }
 
-
-
-vector<Mesh*> &BaseModel::getMeshes()
+std::vector<Mesh*> &BaseModel::getMeshes()
 {
 	return meshes;
 }

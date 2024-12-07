@@ -1,40 +1,35 @@
 #include "ModelContainer.h"
-#include <stdexcept>
 
 #define TEX2_SUFFIX "_normal"
 #define TEX3_SUFFIX "_height"
 #define TEX_EXT ".bmp"
 
-using namespace std;
 
 ModelContainer::ModelContainer(void)
 {
 	totalFacesCount = 0;
 }
 
-
 ModelContainer::~ModelContainer(void)
 {
 	// uvolnit vsechny modely
-	for (vector<BaseModel*>::iterator it = models.begin(); it != models.end(); it++)
+	for (std::vector<BaseModel*>::iterator it = models.begin(); it != models.end(); it++)
 	{
 		delete (*it);
 	}
 }
 
-
-vector<BaseModel*> const &ModelContainer::getModels()
+std::vector<BaseModel*> const &ModelContainer::getModels()
 {
 	return models;
 }
 
-
-vector<ModelContainer::DRAWINGQUEUEITEM> const &ModelContainer::getDrawingQueue()
+std::vector<ModelContainer::DRAWINGQUEUEITEM> const &ModelContainer::getDrawingQueue()
 {
 	return drawingQueue;
 }
 
-vector<ModelContainer::MESHDRAWINGQUEUEITEM> const &ModelContainer::getMeshDrawingQueue()
+std::vector<ModelContainer::MESHDRAWINGQUEUEITEM> const &ModelContainer::getMeshDrawingQueue()
 {
 	return meshDrawingQueue;
 }
@@ -48,7 +43,7 @@ void ModelContainer::optimizeDrawingQueue()
 	 * ],
 	 * [material] => ...
 	 */	
-	typedef map<string, vector<pair<Mesh*, unsigned int>>> MATERIALMAP;
+	typedef std::map<std::string, std::vector<std::pair<Mesh*, unsigned int>>> MATERIALMAP;
 
 	// asociativni pole materialu ve scene a meshi (s vazbou na puvodni model) ktere je pouzivaji
 	MATERIALMAP materials;
@@ -58,7 +53,7 @@ void ModelContainer::optimizeDrawingQueue()
 	{
 		BaseModel* model = drawingQueue[i].model;		
 
-		for (vector<Mesh*>::iterator meshIt = model->getMeshes().begin(); meshIt != model->getMeshes().end(); meshIt++)
+		for (std::vector<Mesh*>::iterator meshIt = model->getMeshes().begin(); meshIt != model->getMeshes().end(); meshIt++)
 		{
 			Mesh* mesh = (*meshIt);
 			
@@ -68,13 +63,13 @@ void ModelContainer::optimizeDrawingQueue()
 			// pokud material neexistuje, vyrobit novy zaznam
 			if (matIt == materials.end()) {
 				// vlozi prazdny zaznam a vraci jeho iterator
-				matIt = materials.insert( 
-							pair<string, vector<pair<Mesh*, unsigned int>>>( mesh->getMaterialName(), vector<pair<Mesh*, unsigned int>>() ) 
-						).first;
+				matIt = materials.insert(
+					std::pair<std::string, std::vector<std::pair<Mesh*, unsigned int>>>( mesh->getMaterialName(), std::vector<std::pair<Mesh*, unsigned int>>() )
+				).first;
 			}
 
 			// pridat mesh do spravne 'skatulky' a zapamatovat si index puvodni polozky
-			(*matIt).second.push_back(pair<Mesh*, unsigned int>(mesh, i));
+			(*matIt).second.push_back(std::pair<Mesh*, unsigned int>(mesh, i));
 		}
 	}
 	
@@ -82,7 +77,7 @@ void ModelContainer::optimizeDrawingQueue()
 	for (MATERIALMAP::iterator matIt = materials.begin(); matIt != materials.end(); matIt++)
 	{
 		// a jimi kreslene meshe
-		for (vector<pair<Mesh*, unsigned int>>::iterator meshIt = (*matIt).second.begin(); meshIt != (*matIt).second.end(); meshIt++)
+		for (std::vector<std::pair<Mesh*, unsigned int>>::iterator meshIt = (*matIt).second.begin(); meshIt != (*matIt).second.end(); meshIt++)
 		{
 			Mesh* mesh = (*meshIt).first;
 			unsigned int drawingQueueIndex = (*meshIt).second;
@@ -92,11 +87,11 @@ void ModelContainer::optimizeDrawingQueue()
 			meshDrawingQueue.push_back(item);
 
 			// najit model v mapovani
-			map<unsigned int, vector<unsigned int>>::iterator mappingIt = drawingQueuesMapping.find(drawingQueueIndex);
+			std::map<unsigned int, std::vector<unsigned int>>::iterator mappingIt = drawingQueuesMapping.find(drawingQueueIndex);
 			
 			// vytvorit zaznam pokud neni
 			if (mappingIt == drawingQueuesMapping.end()) {
-				mappingIt = drawingQueuesMapping.insert( pair<unsigned int, vector<unsigned int>>( drawingQueueIndex, vector<unsigned int>() ) ).first;
+				mappingIt = drawingQueuesMapping.insert(std::pair<unsigned int, std::vector<unsigned int>>( drawingQueueIndex, std::vector<unsigned int>() ) ).first;
 			}
 
 			// zapamatovat si, kteremu modelu tato mesh patrila (pro naslednou upravu matic) - index do meshDrawingQueue
@@ -105,27 +100,20 @@ void ModelContainer::optimizeDrawingQueue()
 	}
 }
 
-
-
-
-
-
-
-
-void ModelContainer::addModel(string name, BaseModel *model) 
+void ModelContainer::addModel(std::string name, BaseModel *model)
 {
 	// pridame model
 	models.push_back(model);
-	modelNames.insert( pair<string, unsigned int>(name, models.size()) );
+	modelNames.insert(std::pair<std::string, unsigned int>(name, models.size()) );
 
 	// pridame info o offsetu jeho indexu
-	modelsIndexOffsets.insert(pair<BaseModel*, unsigned int>(model, totalFacesCount * 3));
+	modelsIndexOffsets.insert(std::pair<BaseModel*, unsigned int>(model, totalFacesCount * 3));
 	
 	// info o indexech meshi
 	unsigned int offset = totalFacesCount * 3;
-	for (vector<Mesh*>::iterator it = model->getMeshes().begin(); it != model->getMeshes().end(); it++)
+	for (std::vector<Mesh*>::iterator it = model->getMeshes().begin(); it != model->getMeshes().end(); it++)
 	{
-		meshesIndexOffsets.insert(pair<Mesh*, unsigned int>((*it), offset));
+		meshesIndexOffsets.insert(std::pair<Mesh*, unsigned int>((*it), offset));
 		offset += (*it)->getFaces().size() * 3;
 	}
 
@@ -133,21 +121,16 @@ void ModelContainer::addModel(string name, BaseModel *model)
 	totalFacesCount += model->facesCount();
 }
 
-
-
-
-
-
-unsigned int ModelContainer::queueDraw(string modelName)
+unsigned int ModelContainer::queueDraw(std::string modelName)
 {
 	return queueDraw(modelName, glm::mat4(1.0));
 }
 
-unsigned int ModelContainer::queueDraw(string modelName, glm::mat4 mat)
+unsigned int ModelContainer::queueDraw(std::string modelName, glm::mat4 mat)
 {
-	map<string, unsigned int>::iterator it = modelNames.find(modelName);
+	std::map<std::string, unsigned int>::iterator it = modelNames.find(modelName);
 	if (it == modelNames.end())
-		runtime_error("Model queued for drawing has not been loaded into container");
+		std::runtime_error("Model queued for drawing has not been loaded into container");
 
 	return queueDraw(models.at((*it).second), mat);
 }
@@ -166,46 +149,35 @@ unsigned int ModelContainer::queueDraw(BaseModel* model, glm::mat4 mat)
 	return drawingQueue.size() - 1;
 }
 
-
-
-
 void ModelContainer::updateDrawingMatrix(unsigned int drawingQueueIndex, glm::mat4 matrix)
 {
 	// najit indexy ve fronte meshi
-	vector<unsigned int> meshIndices = drawingQueuesMapping[drawingQueueIndex];
+	std::vector<unsigned int> meshIndices = drawingQueuesMapping[drawingQueueIndex];
 
 	// aktualizovat vsem matice
-	for (vector<unsigned int>::iterator it = meshIndices.begin(); it != meshIndices.end(); it++)
+	for (std::vector<unsigned int>::iterator it = meshIndices.begin(); it != meshIndices.end(); it++)
 	{
 		meshDrawingQueue[(*it)].matrix = matrix;
 	}
 }
-
-
-
 
 unsigned int ModelContainer::getModelIndexOffset(BaseModel* model)
 {
 	return modelsIndexOffsets[model];
 }
 
-
 unsigned int ModelContainer::getMeshIndexOffset(Mesh* mesh)
 {
 	return meshesIndexOffsets[mesh];
 }
 
-
-
-
-
 unsigned int ModelContainer::verticesCount()
 {
 	unsigned int total = 0;
 
-	for (vector<BaseModel*>::iterator it = models.begin(); it != models.end(); it++)
+	for (std::vector<BaseModel*>::iterator it = models.begin(); it != models.end(); it++)
 	{
-		for (vector<Mesh*>::iterator mit = (*it)->getMeshes().begin(); mit != (*it)->getMeshes().end(); mit++)
+		for (std::vector<Mesh*>::iterator mit = (*it)->getMeshes().begin(); mit != (*it)->getMeshes().end(); mit++)
 		{
 			total += (*mit)->getVertices().size();
 		}				
@@ -214,78 +186,58 @@ unsigned int ModelContainer::verticesCount()
 	return total;
 }
 
-
-
 unsigned int ModelContainer::facesCount()
 {
 	return totalFacesCount;
 }
-
 
 unsigned int ModelContainer::modelsCount()
 {
 	return models.size();
 }
 
-
-
-
-
-
 void ModelContainer::addLight(Light light)
 {
 	lights.push_back(light);
 }
 
-
-vector<Light> &ModelContainer::getLights()
+std::vector<Light> &ModelContainer::getLights()
 {
 	return lights;
 }
 
-
-
-
-
-
-
-
-bool fileExists(string filename)
+bool fileExists(std::string filename)
 {
-	ifstream ifile(filename);
+	std::ifstream ifile(filename);
 	return (bool)ifile;
 }
 
-
-
-
-
-BaseModel* ModelContainer::load3DS(string filename) 
+BaseModel* ModelContainer::load3DS(std::string filename)
 {
 	// parsovani souboru
 	Scene3DS *scene = new Scene3DS(filename.c_str());
-	vector<Mesh3DSObject> meshes = scene->Meshes();
+	std::vector<Mesh3DSObject> meshes = scene->Meshes();
 
 	// vytvorime novy model
 	BaseModel* model = new BaseModel;
-	vector<Mesh*> modelMeshes;
+	std::vector<Mesh*> modelMeshes;
 
-	for (vector<Mesh3DSObject>::iterator it = meshes.begin(); it != meshes.end(); it++) 
+	for (std::vector<Mesh3DSObject>::iterator it = meshes.begin(); it != meshes.end(); it++)
 	{
 		Mesh3DSObject mesh = (*it);
 
 		// nazev
-		string name = mesh.Name();
+		std::string name = mesh.Name();
 
 		// nazev materialu (jen prvni, pokud je vice)
-		string material = "";
+		std::string material = "";
 		if (mesh.Materials().size() > 0)
 		{
 			material = (*mesh.Materials().begin()).first;
 		}
 
 		// vrcholy
-		vector<glm::vec3> vertices;
+		std::vector<glm::vec3> vertices;
 		for (unsigned int i = 0; i < mesh.Vertices().size(); i++)
 		{
 			Mesh3DSVertex vert = mesh.Vertices()[i];
@@ -299,7 +251,7 @@ BaseModel* ModelContainer::load3DS(string filename)
 		}
 
 		// indexy
-		vector<glm::ivec3> faces;
+		std::vector<glm::ivec3> faces;
 		for (unsigned int i = 0; i < mesh.Faces().size(); i++)
 		{
 			Mesh3DSFace face = mesh.Faces()[i];
@@ -307,7 +259,7 @@ BaseModel* ModelContainer::load3DS(string filename)
 		}
 
 		// texturovaci souradnice
-		vector<glm::vec2> texcoords;
+		std::vector<glm::vec2> texcoords;
 		for (unsigned int i = 0; i < mesh.TextureCoords().size(); i++)
 		{
 			Mesh3DSTextureCoord coord = mesh.TextureCoords()[i];
@@ -322,8 +274,8 @@ BaseModel* ModelContainer::load3DS(string filename)
 
 
 	// ulozit materialy
-	vector<Material3DSObject> materials = scene->Materials();
-	for (vector<Material3DSObject>::iterator it = materials.begin(); it != materials.end(); it++) {
+	std::vector<Material3DSObject> materials = scene->Materials();
+	for (std::vector<Material3DSObject>::iterator it = materials.begin(); it != materials.end(); it++) {
 		Material3DSObject m = (*it);
 
 		ShaderManager::MATERIALPARAMS params;
@@ -334,31 +286,31 @@ BaseModel* ModelContainer::load3DS(string filename)
 		
 		// nacist textury do GL, pokud odpovidajici soubory existuji
 		// hleda se automaticky zakladni textura, normalova a vyskova
-		string path = ShaderManager::getTexturesPath();
+		std::string path = ShaderManager::getTexturesPath();
 		if (fileExists(path + m.Texture())) {
 			params.textures.push_back( ShaderManager::loadTexture(path + m.Texture()) );
 
-			string::size_type pos = m.Texture().find_last_of(".");
-			string baseName = m.Texture().substr(0, pos);
+			std::string::size_type pos = m.Texture().find_last_of(".");
+			std::string baseName = m.Texture().substr(0, pos);
 
-			string normalTexture = path + baseName + TEX2_SUFFIX + TEX_EXT;
+			std::string normalTexture = path + baseName + TEX2_SUFFIX + TEX_EXT;
 			if (fileExists(normalTexture))
 				params.textures.push_back( ShaderManager::loadTexture(normalTexture) );
 
-			string heightTexture = path + baseName + TEX3_SUFFIX + TEX_EXT;
+			std::string heightTexture = path + baseName + TEX3_SUFFIX + TEX_EXT;
 			if (fileExists(heightTexture))
 				params.textures.push_back( ShaderManager::loadTexture(heightTexture) );
 		}
 
 		// za shader povazujeme vse pred podtrzitkem, pokud se v nazvu vyskytuje
-		string::size_type pos = m.Name().find("_");
-		if (pos != string::npos)
+		std::string::size_type pos = m.Name().find("_");
+		if (pos != std::string::npos)
 			ShaderManager::addMaterial(m.Name().substr(0, pos));
 		else
 			ShaderManager::addMaterial(m.Name());
 
 		// priradit parametry materialu vsem meshim ktere ho pouzivaji
-		for (vector<Mesh*>::iterator meshIt = modelMeshes.begin(); meshIt != modelMeshes.end(); meshIt++)
+		for (std::vector<Mesh*>::iterator meshIt = modelMeshes.begin(); meshIt != modelMeshes.end(); meshIt++)
 		{
 			if ((*meshIt)->getMaterialName() == m.Name())
 				(*meshIt)->setMaterialParams(params);
@@ -376,8 +328,8 @@ BaseModel* ModelContainer::load3DS(string filename)
 	}
 
 	// ulozit svetla
-	vector<Light3DSObject> parsedLights = scene->Lights();
-	for (vector<Light3DSObject>::iterator it = parsedLights.begin(); it != parsedLights.end(); it++) {
+	std::vector<Light3DSObject> parsedLights = scene->Lights();
+	for (std::vector<Light3DSObject>::iterator it = parsedLights.begin(); it != parsedLights.end(); it++) {
 		
 		// vse v 3DS je Z-up; transformovat na Y-up
 		Light3DSObject::POSITION pos = (*it).Position();

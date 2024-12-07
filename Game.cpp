@@ -2,12 +2,9 @@
 #include "Light.h"
 
 #define UNUSED_SHADER_ATTR -1
-
 #define WALK_SPEED 0.01f
 #define STATICS_SCALE 0.05f
 #define INTRO_TIME_MS 2000
-
-using namespace std;
 
 Game::Game(): mouseCaptured(false), drawWireframe(false), followCamera(true)
 {
@@ -26,22 +23,13 @@ Game::~Game()
 	delete physics;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// Event handlers
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
 void Game::onInit()
 {
 	BaseApp::onInit();
 
-	cout << "The Game is loading:" << endl;
+	std::cout << "The Game is loading:" << std::endl;
 
-	cout << "- loading models" << endl;
+	std::cout << "- loading models" << std::endl;
 
 	// nacist modely	
 	container = new ModelContainer;	
@@ -56,15 +44,15 @@ void Game::onInit()
 	BaseModel* plank =  container->load3DS("models/plank.3ds");
     BaseModel* checkpoint =  container->load3DS("models/checkpoint.3ds");
 
-    cout << "- initializing physics" << endl;
+	std::cout << "- initializing physics" << std::endl;
 
     physics = new Physics();
 
     physics->AddCar(PhysicsUtils::btTransFrom(btVector3(36.2f, 8.95f, -21.7f), btQuaternion(btVector3(0, 1, 0), -M_PI/2.f))); // 0,2,5
 
    //physics->AddRigidBody(5., PhysicsUtils::btTransFrom(btVector3(0, 3, 1)), new btBoxShape(btVector3(0.75,0.75,0.75)))->setAngularVelocity(btVector3(1,1,1)); // TODO konstruktor se neprelozi kvuli Debug.h    
-    		
-	cout << "- setting up drawing queue" << endl;
+
+	std::cout << "- setting up drawing queue" << std::endl;
 		
 	// vykresli E112
 	if (1) {
@@ -173,8 +161,8 @@ void Game::onInit()
 		BaseModel* sphere = container->load3DS("models/sphere.3ds");
 		container->addModel("lightsphere", sphere);
 
-		vector<Light> lights = container->getLights();
-		for (vector<Light>::iterator it = lights.begin(); it != lights.end(); it++)
+		std::vector<Light> lights = container->getLights();
+		for (std::vector<Light>::iterator it = lights.begin(); it != lights.end(); it++)
 		{
 			glm::vec4 pos = (*it).Position();
 			glm::mat4 mat = glm::scale(glm::translate(pos.x, pos.y, pos.z), glm::vec3(0.001));
@@ -374,21 +362,21 @@ void Game::onInit()
     }
 
 
-	cout << "- constructing scene" << endl;
+	std::cout << "- constructing scene" << std::endl;
 
 	// vyrobit scenu
 	scene->addModelContainer(container);
 	scene->init();
 
-	cout << "- constructing shadow volumes" << endl;
+	std::cout << "- constructing shadow volumes" << std::endl;
 
 	// vygenerovat stinova telesa (pro vsechna svetla; nehlede na to jestli sviti nebo ne)
 	shadowVolumes->generate();
 	
-	cout << "- done!" << endl;
+	std::cout << "- done!" << std::endl;
 	
 	// rozsvitit vsechna svetla
-	enabledLights = vector<bool>(shadowVolumes->getLightsCount(), true);
+	enabledLights = std::vector<bool>(shadowVolumes->getLightsCount(), true);
 
 	// nacist vsechny materialy	
 	ShaderManager::loadPrograms();
@@ -407,9 +395,6 @@ void Game::onInit()
 	// po startu nepouzivat generovane textury - hodne zpomaluji
 	ShaderManager::addShaderSubstitution("desk", "glossy");	
 }
- 
-
-
 
 void Game::onWindowRedraw(const GameTime & gameTime) 
 {	
@@ -426,16 +411,14 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 
     container->updateDrawingMatrix(carQueueItem, carMatrix);
 
-    if (followCamera)
-    {
+    if (followCamera) {
         btVector3 vel = physics->GetCar()->GetVehicle()->getRigidBody()->getLinearVelocity();        
         
         if (gameTime.Total() > INTRO_TIME_MS)
             camera.Follow(carMatrix, glm::vec3(vel.x(), vel.y(), vel.z()), gameTime);
     }    
  
-    for (int i = 0; i < physics->GetCar()->GetVehicle()->getNumWheels(); i++)
-    {
+    for (int i = 0; i < physics->GetCar()->GetVehicle()->getNumWheels(); i++) {
         physics->GetCar()->GetVehicle()->updateWheelTransform(i, true); //synchronize the wheels with the (interpolated) chassis worldtransform        
         glm::mat4 wheelMatrix = glm::scale(PhysicsUtils::glmMat4From(physics->GetCar()->GetVehicle()->getWheelInfo(i).m_worldTransform), glm::vec3(CAR_SCALE));
         
@@ -455,8 +438,7 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 	glm::mat4 mPerspective = glm::perspective(45.0f, (float)getWindowAspectRatio(), 0.1f, 1000.0f);
 
 
-	if (drawShadows) 
-	{
+	if (drawShadows) {
 		// ===================================================================================================
 		// vicepruchodove kresleni se stencil stiny podle:
 		// http://www.angelfire.com/games5/duktroa/RealTimeShadowTutorial.htm
@@ -477,8 +459,7 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 		glEnable(GL_STENCIL_TEST); // budeme pouzivat stencil buffer
 		// -----------------------------------------------------------
 
-		for (unsigned int lightI = 0; lightI < enabledLights.size(); lightI++)
-		{
+		for (unsigned int lightI = 0; lightI < enabledLights.size(); lightI++) {
 			// zhasnute svetla neni treba blendovat
 			if (enabledLights[lightI] == false)
 				continue;
@@ -513,7 +494,7 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 			glStencilFunc(GL_EQUAL, 0x0, 0xff); // And the most important thing, the stencil function. Drawing if equal to 0
 
 			// v poli priznaku rozsvitit jen jedno svetlo
-			vector<bool> lght = vector<bool>(enabledLights.size(), false);
+			std::vector<bool> lght = std::vector<bool>(enabledLights.size(), false);
 			lght[lightI] = true;
 
 			// vykreslit scenu osvetlenou pouze jednim svetlem a pouze difuznimi a spekularnimi slozkami
@@ -544,11 +525,11 @@ void Game::onWindowRedraw(const GameTime & gameTime)
     // ---------------------------------------
 	// Vykresleni ingame gui
 #if 1
-	ostringstream time;
+	std::ostringstream time;
     time << physics->Checkpoint().GetTime(gameTime); //physics->GetCar()->GetVehicle()->getCurrentSpeedKmHour(); //gameTime.Total();
     gui->updateString(guiTime, time.str());
 
-    ostringstream checkpoint;
+	std::ostringstream checkpoint;
     if (physics->Checkpoint().PassedFinish())
         checkpoint << "R-restart";
     else
@@ -565,16 +546,16 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 
 
 
-void Game::drawLines(vector<PhysicsDebugDraw::LINE> & lines)
+void Game::drawLines(std::vector<PhysicsDebugDraw::LINE> & lines)
 {
     // vykresleni car -----------------------
 	glDisable(GL_CULL_FACE);
 
-	vector<GLfloat> vertices;
-	vector<GLuint> indices;
+	std::vector<GLfloat> vertices;
+	std::vector<GLuint> indices;
 	unsigned int indexI = 0;
 
-	for (vector<PhysicsDebugDraw::LINE>::iterator it = lines.begin(); it != lines.end(); it++)
+	for (std::vector<PhysicsDebugDraw::LINE>::iterator it = lines.begin(); it != lines.end(); it++)
 	{
 		PhysicsDebugDraw::LINE l = (*it);
 		vertices.push_back(l.a.x);
@@ -635,7 +616,6 @@ void Game::drawLines(vector<PhysicsDebugDraw::LINE> & lines)
 
     lines.clear();
 }
-
 
 void Game::handleActiveKeys(const GameTime & gameTime)
 {
@@ -725,8 +705,8 @@ void Game::onKeyDown(SDLKey key, Uint16 mod)
 
 	// F5 - zapnuti/vypnuti generovaneho sumu v shaderu desk lavic
 	if (key == SDLK_F5) {
-		const map<string, string>& substitutions = ShaderManager::getSubstitutions();
-		map<string, string>::const_iterator substIt = substitutions.find("desk");
+		const std::map<std::string, std::string>& substitutions = ShaderManager::getSubstitutions();
+		std::map<std::string, std::string>::const_iterator substIt = substitutions.find("desk");
 		if (substIt == substitutions.end()) {
 			ShaderManager::addShaderSubstitution("desk", "glossy");
 
@@ -761,7 +741,7 @@ void Game::onMouseMove(unsigned x, unsigned y, int xrel, int yrel, Uint8 buttons
 		camera.Aim(vertAngle, horizAngle);
 
 		if (0) {
-			cout << "xrel: " << xrel << "\tyrel: " << yrel << endl;
+			std::cout << "xrel: " << xrel << "\tyrel: " << yrel << std::endl;
 			camera.DebugDump();
 		}
 	}
@@ -775,19 +755,19 @@ void Game::onWindowResized(int w, int h)
 }
 
 
-string Game::statsString()
+std::string Game::statsString()
 {
     static unsigned int vertCount = 0;
     static unsigned int faceCount = 0;
     
     if (vertCount > 0 && faceCount > 0) {
-        ostringstream out;
-        out << vertCount << " vertices, " << faceCount << " faces";
-        return string(out.str());
+		std::ostringstream out;
+		out << vertCount << " vertices, " << faceCount << " faces";
+        return std::string(out.str());
     }
     
     if (scene->getModelContainers().size() > 0) {
-        for (vector<ModelContainer*>::iterator it = scene->getModelContainers().begin(); it != scene->getModelContainers().end(); it++)
+        for (std::vector<ModelContainer*>::iterator it = scene->getModelContainers().begin(); it != scene->getModelContainers().end(); it++)
         {
             vertCount += (*it)->verticesCount();
             faceCount += (*it)->facesCount();
@@ -796,5 +776,3 @@ string Game::statsString()
     
     return "---";
 }
-
-

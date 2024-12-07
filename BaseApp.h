@@ -17,61 +17,61 @@
 
 
 class BaseApp {
-	
-	public:
-		BaseApp();
-		virtual ~BaseApp();
 
-		Camera* const getCamera();		
+public:
+	BaseApp();
+	virtual ~BaseApp();
 
-		virtual void handleEvent(SDL_Event);
+	Camera* const getCamera();		
+
+	virtual void handleEvent(SDL_Event);
 		
-		virtual void onInit();
-		virtual void onWindowRedraw(const GameTime & gameTime);		
+	virtual void onInit();
+	virtual void onWindowRedraw(const GameTime & gameTime);		
 
-		virtual void onWindowResized(int w, int h);
-		virtual void onKeyDown(SDLKey key, Uint16 /*mod*/);
-		virtual void onKeyUp(SDLKey /*key*/, Uint16 /*mod*/);
-		virtual void onMouseMove(unsigned /*x*/, unsigned /*y*/, int xrel, int yrel, Uint8 buttons);
-		virtual void onMouseDown(Uint8 button, unsigned /*x*/, unsigned /*y*/);
-		virtual void onMouseUp(Uint8 /*button*/, unsigned /*x*/, unsigned /*y*/);
+	virtual void onWindowResized(int w, int h);
+	virtual void onKeyDown(SDLKey key, Uint16 /*mod*/);
+	virtual void onKeyUp(SDLKey /*key*/, Uint16 /*mod*/);
+	virtual void onMouseMove(unsigned /*x*/, unsigned /*y*/, int xrel, int yrel, Uint8 buttons);
+	virtual void onMouseDown(Uint8 button, unsigned /*x*/, unsigned /*y*/);
+	virtual void onMouseUp(Uint8 /*button*/, unsigned /*x*/, unsigned /*y*/);
 
-		// Vraci pomer stran okna aplikace
-		inline double getWindowAspectRatio()
-		{
-			return static_cast<double>(windowWidth) / windowHeight;
-		}
+	// Vraci pomer stran okna aplikace
+	inline double getWindowAspectRatio()
+	{
+		return static_cast<double>(windowWidth) / windowHeight;
+	}
 
 
-	protected:
-		// rozmery viewportu
-		int windowWidth, windowHeight;
+protected:
+	// rozmery viewportu
+	int windowWidth, windowHeight;
 
-		// camera
-		Camera camera;
+	// camera
+	Camera camera;
 
-		// seznam aktualne stisknutych klaves
-		std::list<SDLKey> activeKeys;
-		
-		////////////////////////////////////////////////////////////////////////////////
-		
-		// Send quit event
-		inline void quit()
-		{
-			SDL_Event event;
-			event.type = SDL_QUIT;
-			if(SDL_PushEvent(&event) < 0) throw SDL_Exception();
-		}
+	// seznam aktualne stisknutych klaves
+	std::list<SDLKey> activeKeys;
 
-		// Send redraw event
-		inline void redraw()
-		{
-			SDL_Event event;
-			event.type = SDL_VIDEOEXPOSE;
-			if(SDL_PushEvent(&event) < 0) throw SDL_Exception();
-		}
+	// Send quit event
+	inline void quit()
+	{
+		SDL_Event event;
+		event.type = SDL_QUIT;
+
+		if (SDL_PushEvent(&event) < 0)
+			throw SDL_Exception();
+	}
+
+	// Send redraw event
+	inline void redraw()
+	{
+		SDL_Event event;
+		event.type = SDL_VIDEOEXPOSE;
+
+		if (SDL_PushEvent(&event) < 0)
+			throw SDL_Exception();
+	}
 };
-
-
 
 #endif

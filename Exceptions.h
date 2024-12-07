@@ -8,8 +8,8 @@
 #include <SDL.h>
 #include <GL/glew.h>
 
-// Replacement for gluErrorString
-const char * getGlErrorString(GLenum error);
+
+const char * getGlErrorString(GLenum error); // Replacement for gluErrorString
 
 struct SDL_Exception : public std::runtime_error
 {

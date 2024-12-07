@@ -10,15 +10,11 @@
 #define INFINITY 1
 #define EPSILON 0.0005f
 
-
 // pomocne definy pro testovani
 #define DRAW_VISIBLE_FACES 0
 #define DRAW_VOLUME 1
 #define DRAW_VOLUME_LINES 0
 #define DRAW_CAPS 1
-
-using namespace std;
-
 
 
 ShadowVolumes::ShadowVolumes(void)
@@ -26,11 +22,10 @@ ShadowVolumes::ShadowVolumes(void)
 	ShaderManager::loadProgram(PROGRAM_NAME);
 }
 
-
 ShadowVolumes::~ShadowVolumes(void)
 {
 	// uvolnit meshe
-	for (vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
+	for (std::vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); it++)
 	{
 		delete (*it);
 	}
@@ -41,9 +36,9 @@ ShadowVolumes::~ShadowVolumes(void)
 void ShadowVolumes::generate()
 {
 	// seskladat vsechny meshe a rovnou je vynasobime modelovou matici
-	for (vector<pair<BaseModel*, glm::mat4>>::iterator modelIt = models.begin(); modelIt != models.end(); modelIt++)
+	for (std::vector<std::pair<BaseModel*, glm::mat4>>::iterator modelIt = models.begin(); modelIt != models.end(); modelIt++)
 	{
-		for (vector<Mesh*>::iterator meshIt = (*modelIt).first->getMeshes().begin(); meshIt != (*modelIt).first->getMeshes().end(); meshIt++)
+		for (std::vector<Mesh*>::iterator meshIt = (*modelIt).first->getMeshes().begin(); meshIt != (*modelIt).first->getMeshes().end(); meshIt++)
 		{
 			Mesh* mesh = (*meshIt);
 
@@ -58,10 +53,10 @@ void ShadowVolumes::generate()
 	// vypocitat sousednosti jiz nad novymi meshi
 	computeNeighboursAndVisibilities();
 
-	VBOs = vector<GLuint>(lights.size());
-	EBOs = vector<GLuint>(lights.size());
-	capVBOs = vector<GLuint>(lights.size());
-	capEBOs = vector<GLuint>(lights.size());
+	VBOs = std::vector<GLuint>(lights.size());
+	EBOs = std::vector<GLuint>(lights.size());
+	capVBOs = std::vector<GLuint>(lights.size());
+	capEBOs = std::vector<GLuint>(lights.size());
 
 	// vyrobit GL buffery
 	for (unsigned int lightI = 0; lightI < lights.size(); lightI++)
@@ -69,19 +64,19 @@ void ShadowVolumes::generate()
 		glm::vec3 light = lights[lightI];
 		
 		// steny teles - triangle strip
-		vector<glm::vec3> glVertices;
-		vector<unsigned int> glIndices;
+		std::vector<glm::vec3> glVertices;
+		std::vector<unsigned int> glIndices;
 
 		// vika teles - triangle
-		vector<glm::vec3> glCapVertices;
-		vector<unsigned int> glCapIndices;
+		std::vector<glm::vec3> glCapVertices;
+		std::vector<unsigned int> glCapIndices;
 
 
 		for (unsigned int meshI = 0; meshI < meshes.size(); meshI++)
 		{
 			Mesh* mesh = meshes[meshI];
-			vector<glm::ivec3> faces = mesh->getFaces();
-			vector<glm::vec3> vertices = mesh->getVertices();
+			std::vector<glm::ivec3> faces = mesh->getFaces();
+			std::vector<glm::vec3> vertices = mesh->getVertices();
 
 			for (unsigned int faceI = 0; faceI < faces.size(); faceI++)
 			{
@@ -93,10 +88,10 @@ void ShadowVolumes::generate()
 					Neighbours neighbours = facesNeighbours[mesh][faceI];
 
 					// hrana facu definovana vzdy dvema indexy vrcholu + indexem souseda
-					pair<glm::ivec2, int> edges[3] = {
-						pair<glm::ivec2, int>(glm::ivec2(face.x, face.y), neighbours.a),
-						pair<glm::ivec2, int>(glm::ivec2(face.y, face.z), neighbours.b),
-						pair<glm::ivec2, int>(glm::ivec2(face.z, face.x), neighbours.c)
+					std::pair<glm::ivec2, int> edges[3] = {
+						std::pair<glm::ivec2, int>(glm::ivec2(face.x, face.y), neighbours.a),
+						std::pair<glm::ivec2, int>(glm::ivec2(face.y, face.z), neighbours.b),
+						std::pair<glm::ivec2, int>(glm::ivec2(face.z, face.x), neighbours.c)
 					};
 
 #if DRAW_VISIBLE_FACES
@@ -187,7 +182,7 @@ void ShadowVolumes::generate()
 		
 		float* mappingVBO = (float*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		
-		for (vector<glm::vec3>::iterator it = glVertices.begin(); it != glVertices.end(); it++)
+		for (std::vector<glm::vec3>::iterator it = glVertices.begin(); it != glVertices.end(); it++)
 		{
 			*(mappingVBO + 0) = (*it).x;
 			*(mappingVBO + 1) = (*it).y;
@@ -208,7 +203,7 @@ void ShadowVolumes::generate()
 		
 		float* mappingCapVBO = (float*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		
-		for (vector<glm::vec3>::iterator it = glCapVertices.begin(); it != glCapVertices.end(); it++)
+		for (std::vector<glm::vec3>::iterator it = glCapVertices.begin(); it != glCapVertices.end(); it++)
 		{
 			*(mappingCapVBO + 0) = (*it).x;
 			*(mappingCapVBO + 1) = (*it).y;
@@ -270,15 +265,15 @@ void ShadowVolumes::computeNeighboursAndVisibilities()
 	for (unsigned int meshI = 0; meshI < meshes.size(); meshI++)
 	{
 		Mesh* mesh = meshes[meshI];
-		vector<glm::vec3> const &vertices = mesh->getVertices();
-		vector<glm::ivec3> faces = mesh->getFaces();
+		std::vector<glm::vec3> const &vertices = mesh->getVertices();
+		std::vector<glm::ivec3> faces = mesh->getFaces();
 
 		// vytvorit novy zaznam; sousednosti zatim neexistuji
-		vector<Neighbours> dummy(faces.size());
-		facesNeighbours.insert(pair<Mesh*, vector<Neighbours>>(mesh, dummy));
+		std::vector<Neighbours> dummy(faces.size());
+		facesNeighbours.insert(std::pair<Mesh*, std::vector<Neighbours>>(mesh, dummy));
 		
 		// zde budeme shromazdovat informace o viditelnostech
-		vector<vector<bool>> faceVisibilities(faces.size());
+		std::vector<std::vector<bool>> faceVisibilities(faces.size());
 
 		// pro kazdou face
 		for (unsigned int faceIA = 0; faceIA < faces.size(); faceIA++)
@@ -296,7 +291,7 @@ void ShadowVolumes::computeNeighboursAndVisibilities()
 			float c = vA1.x*(vA2.y-vA3.y) + vA2.x*(vA3.y-vA1.y) + vA3.x*(vA1.y-vA2.y);
 			float d = -( vA1.x*( vA2.y*vA3.z - vA3.y*vA2.z ) + vA2.x*(vA3.y*vA1.z - vA1.y*vA3.z) + vA3.x*(vA1.y*vA2.z - vA2.y*vA1.z) );
 
-			vector<bool> visibilities(lights.size());
+			std::vector<bool> visibilities(lights.size());
 
 			// pro kazde svetlo urcime zda je face viditelny
 			for (unsigned int lightI = 0; lightI < lights.size(); lightI++)
@@ -377,10 +372,6 @@ void ShadowVolumes::computeNeighboursAndVisibilities()
 		meshFacesVisibilities[meshI] = faceVisibilities;
 	}	
 }
-
-
-
-
 
 void ShadowVolumes::draw(unsigned int lightI, glm::mat4 mView, glm::mat4 mProjection)
 {

@@ -1,3 +1,7 @@
+/*
+ * Pomocna trida pro debug vykresleni koliznich teles pouzitych v simulaci; kresleni pouze pomoci car.
+ */
+
 #ifndef PHYSICSDEBUGDRAW_H
 #define PHYSICSDEBUGDRAW_H
 
@@ -7,9 +11,7 @@
 
 #include <btBulletDynamicsCommon.h>
 
-/**
- * Pomocna trida pro debug vykresleni koliznich teles pouzitych v simulaci; kresleni pouze pomoci car.
- */
+
 class PhysicsDebugDraw : public btIDebugDraw
 {
 public:

@@ -1,9 +1,6 @@
 #include "Gui.h"
 
-using namespace std;
-
 #define PROGRAM_NAME "gui"
-
 #define UNUSED_SHADER_ATTR -1
 
 #define TEX_COLS 16
@@ -25,10 +22,6 @@ Gui::Gui(int screenWidth, int screenHeight) :
 	materialParams.textures.push_back(guiTexture);
 }
 
-
-
-
-
 void Gui::updateData()
 {
 	vertices.clear();
@@ -41,10 +34,10 @@ void Gui::updateData()
 	float letterWidth = (LTR_BOX_WIDTH / screenWidth) * 2;
 	float letterHeight = (LTR_BOX_HEIGHT / screenHeight) * 2;
 
-	for (vector<pair<string, POSITION>>::iterator it = strings.begin(); it != strings.end(); it++)
+	for (std::vector<std::pair<std::string, POSITION>>::iterator it = strings.begin(); it != strings.end(); it++)
 	{
-		pair<string, POSITION> p = (*it);
-		string str = p.first;
+		std::pair<std::string, POSITION> p = (*it);
+		std::string str = p.first;
 		POSITION position = p.second;
 
 		// rozmery bounding boxu v rozmerech zarizeni
@@ -126,11 +119,8 @@ void Gui::updateData()
 
 }
 
-
-
-
 Gui::LTRTEXCOORDS Gui::getCharTexCoords(char c)
-{	
+{
 	// pozice znaku v texture
 	unsigned int index = c;
 	LTRTEXCOORDS tex;
@@ -143,10 +133,6 @@ Gui::LTRTEXCOORDS Gui::getCharTexCoords(char c)
 
 	return tex;
 }
-
-
-
-
 
 void Gui::draw()
 {

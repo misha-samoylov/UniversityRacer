@@ -16,7 +16,7 @@ typedef struct VBOENTRY {
 
 
 Scene::Scene(BaseApp& parentApp) : application(parentApp)
-{	
+{
 }
 
 Scene::~Scene() 

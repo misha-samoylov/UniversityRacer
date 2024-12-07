@@ -6,6 +6,7 @@
 
 #include "GameTime.h"
 
+
 /**
  * Pocita FPS a udrzuje nejlepsi, nejhorsi a prumerne hodnoty.
  * Inspirovano podle knihovny OGRE (http://www.ogre3d.org/)

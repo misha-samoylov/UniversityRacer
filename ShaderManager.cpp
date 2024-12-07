@@ -4,28 +4,23 @@
 #define SHADERS_PATH "materials/"
 #define TEXTURES_PATH "materials/textures/"
 
-using namespace std;
-
 // init statickych promennych
 ShaderManager::PROGRAMBINDING ShaderManager::currentProgram;
 
-map<string, ShaderManager::PROGRAMBINDING> ShaderManager::programs = map<string, ShaderManager::PROGRAMBINDING>();
-
-map<string, GLuint> ShaderManager::textures = map<string, GLuint>();
+std::map<std::string, ShaderManager::PROGRAMBINDING> ShaderManager::programs = std::map<std::string, ShaderManager::PROGRAMBINDING>();
+std::map<std::string, GLuint> ShaderManager::textures = std::map<std::string, GLuint>();
 
 GLenum ShaderManager::activeTexture = GL_NONE;
 
-vector<string> ShaderManager::shadersToLoad = vector<string>();
-
-map<string, string> ShaderManager::shaderSubstitutions;
-
+std::vector<std::string> ShaderManager::shadersToLoad = std::vector<std::string>();
+std::map<std::string, std::string> ShaderManager::shaderSubstitutions;
 
 void ShaderManager::loadPrograms()
 {
-	for (vector<string>::iterator it = shadersToLoad.begin(); it != shadersToLoad.end(); it++)
+	for (std::vector<std::string>::iterator it = shadersToLoad.begin(); it != shadersToLoad.end(); it++)
 	{
 		if (!loadProgram(*it)) {
-			cerr << "Warning: Shader for material '" << (*it) << "' not found" << endl;
+			std::cerr << "Warning: Shader for material '" << (*it) << "' not found" << std::endl;
 		}
 	}
 
@@ -33,10 +28,7 @@ void ShaderManager::loadPrograms()
 	loadDefaultProgram();
 }
 
-
-
-
-bool ShaderManager::loadProgram(string material)
+bool ShaderManager::loadProgram(std::string material)
 {
 	// pokud jiz program existuje, neni treba jej nacitat znovu
 	if (programs.find(material) != programs.end())
@@ -45,8 +37,8 @@ bool ShaderManager::loadProgram(string material)
 	PROGRAMBINDING mat;
 	
 	// VS
-	string vsPath = SHADERS_PATH + material + ".vert";
-	string vsSource;
+	std::string vsPath = SHADERS_PATH + material + ".vert";
+	std::string vsSource;
 
 	try { vsSource = loadFile(vsPath.c_str()); } 
 	catch (String_Exception e) { return false; }
@@ -55,8 +47,8 @@ bool ShaderManager::loadProgram(string material)
 
 
 	// FS
-	string fsPath = SHADERS_PATH + material + ".frag";
-	string fsSource;
+	std::string fsPath = SHADERS_PATH + material + ".frag";
+	std::string fsSource;
 	
 	try { fsSource = loadFile(fsPath.c_str()); }
 	catch (String_Exception e) { return false; }
@@ -93,7 +85,7 @@ bool ShaderManager::loadProgram(string material)
 
 	for (unsigned int i = 1; i <= 3; i++)
 	{
-		ostringstream uniformName;
+		std::ostringstream uniformName;
 		uniformName << "texture" << i;
 		mat.textureUniforms.push_back( glGetUniformLocation(mat.program, uniformName.str().c_str()) );
 	}
@@ -105,9 +97,6 @@ bool ShaderManager::loadProgram(string material)
 
 	return true;
 }
-
-
-
 
 void ShaderManager::useMaterialParams(ShaderManager::MATERIALPARAMS params)
 {
@@ -184,15 +173,15 @@ void ShaderManager::useMaterialParams(ShaderManager::MATERIALPARAMS params)
 
 
 
-ShaderManager::PROGRAMBINDING ShaderManager::useProgram(string program)
+ShaderManager::PROGRAMBINDING ShaderManager::useProgram(std::string program)
 {	
 	// overit substituci shaderu
-	map<string, string>::iterator substIt = shaderSubstitutions.find(program);
+	std::map<std::string, std::string>::iterator substIt = shaderSubstitutions.find(program);
 	if (substIt != shaderSubstitutions.end())
 		program = (*substIt).second;
 
 
-	map<string, PROGRAMBINDING>::iterator el = programs.find(program);
+	std::map<std::string, PROGRAMBINDING>::iterator el = programs.find(program);
 	
 	// fallback shaderu
 	if (el == programs.end())
@@ -209,17 +198,12 @@ ShaderManager::PROGRAMBINDING ShaderManager::useProgram(string program)
 	return mat;	
 }
 
-
-
 ShaderManager::PROGRAMBINDING ShaderManager::getCurrentProgram()
 {
 	return currentProgram;
 }
 
-
-
-
-GLuint ShaderManager::loadTexture(string path)
+GLuint ShaderManager::loadTexture(std::string path)
 {
 	SDL_Surface * surface = SDL_LoadBMP(path.c_str());
 	if(surface == NULL) throw SDL_Exception();
@@ -239,8 +223,6 @@ GLuint ShaderManager::loadTexture(string path)
 
 	return handle;
 }
-
-
 
 /*
 vector<ShaderManager::TEXTUREBINDING> ShaderManager::loadTextures(GLuint program, string source)
@@ -377,15 +359,11 @@ vector<ShaderManager::TEXTUREBINDING> ShaderManager::loadTextures(GLuint program
 }
 */
 
-
-
-
 void ShaderManager::loadDefaultProgram()
 {
 	if (!loadProgram(DEFAULT_PROGRAM))
 		throw std::runtime_error("Default material shader not found");
 }
-
 
 ShaderManager::MATERIALPARAMS ShaderManager::getDefaultMaterial()
 {
@@ -398,15 +376,10 @@ ShaderManager::MATERIALPARAMS ShaderManager::getDefaultMaterial()
 	return params;
 }
 
-
-
-string ShaderManager::getTexturesPath()
+std::string ShaderManager::getTexturesPath()
 {
 	return TEXTURES_PATH;
 }
-
-
-
 
 //////////////////////////////////////////////////////////////////////
 // Kod ze cviceni
@@ -440,7 +413,7 @@ void ShaderManager::SurfaceImage2D(GLenum target, GLint level, GLint internalfor
 }
 
 // Load whole file and return it as std::string
-string ShaderManager::loadFile(const char * const file)
+std::string ShaderManager::loadFile(const char * const file)
 {
     std::ifstream stream(file);
 	if(stream.fail()) throw String_Exception(std::string("Can't open \'") + file + "\'");
@@ -448,7 +421,7 @@ string ShaderManager::loadFile(const char * const file)
 }
 
 // Info log contains errors and warnings from shader compilation
-string ShaderManager::getShaderInfoLog(const GLuint shader)
+std::string ShaderManager::getShaderInfoLog(const GLuint shader)
 {
     int length;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
@@ -458,7 +431,7 @@ string ShaderManager::getShaderInfoLog(const GLuint shader)
 }
 
 // Info log contains errors and warnings from shader linking
-string ShaderManager::getProgramInfoLog(const GLuint program)
+std::string ShaderManager::getProgramInfoLog(const GLuint program)
 {
     int length;
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
@@ -476,9 +449,9 @@ GLuint ShaderManager::compileShader(const GLenum type, const char * source)
     glCompileShader(shader);
 
 	// vypisovat jenom pokud nastala chyba
-	string log = getShaderInfoLog(shader);
-	if (log.find("was successfully compiled") == string::npos)
-		std::cout << "Compile: " << log << endl;
+	std::string log = getShaderInfoLog(shader);
+	if (log.find("was successfully compiled") == std::string::npos)
+		std::cout << "Compile: " << log << std::endl;
 
     int compileStatus;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
@@ -506,9 +479,9 @@ GLuint ShaderManager::linkShader(size_t count, ...)
     glLinkProgram(program);
 	
 	// vypisovta jen pokud nastala chyba
-	string log = getProgramInfoLog(program);
-	if (log.find("Error") != string::npos || log.find("error") != string::npos || log.find("Warning") != string::npos || log.find("warning") != string::npos)
-		std::cout << "Link: " << log << endl;
+	std::string log = getProgramInfoLog(program);
+	if (log.find("Error") != std::string::npos || log.find("error") != std::string::npos || log.find("Warning") != std::string::npos || log.find("warning") != std::string::npos)
+		std::cout << "Link: " << log << std::endl;
 
     int linkStatus;
     glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
@@ -523,7 +496,7 @@ GLuint ShaderManager::linkShader(size_t count, ...)
 // Kod z webu pro horizontalni flip SDL_surface, resp. textury
 ////////////////////////////////////////////////////////////////////
 
-/**
+/*
  * http://www.libsdl.org/docs/html/guidevideo.html
  */
 Uint32 getpixel(SDL_Surface *surface, int x, int y)
@@ -553,7 +526,7 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
     }
 }	
 
-/**
+/*
  * http://www.libsdl.org/docs/html/guidevideo.html
  */
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)

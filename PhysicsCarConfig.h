@@ -1,3 +1,8 @@
+/*
+ * Konfigurace vlastnosti a chovani auta.
+ * Popis hodnot prevzan z dokumentu Vehicle Simulation With Bullet (http://tinyurl.com/ydfb7lm)
+ */
+
 #ifndef PHYSICSCARCONFIG_H
 #define PHYSICSCARCONFIG_H
 
@@ -6,10 +11,7 @@
 #define CAR_SCALE 0.25f       /// meritko auta
 #define CAR_RAISE_BOTTOM 0.1f /// zvyseni spodku kolizniho telesa auta
 
-/**
- * Konfigurace vlastnosti a chovani auta.
- * Popis hodnot prevzan z dokumentu Vehicle Simulation With Bullet (http://tinyurl.com/ydfb7lm)
- */
+
 struct CarConfig
 {
     CarConfig(): mass(5.0f),

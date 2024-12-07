@@ -4,6 +4,7 @@
 #include <ostream>
 #include <iomanip>
 
+
 /**
  * Trida reprezentujici casovy udaj.
  */

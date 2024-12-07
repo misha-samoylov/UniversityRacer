@@ -24,8 +24,6 @@
 #include "BaseApp.h"
 #include "Game.h"
 
-using namespace std;
-
 BaseApp* application = NULL;
 
 void PrintGLVersion()
@@ -110,7 +108,8 @@ void mainLoop()
 		//updateFPS(SDL_GetTicks());
         gameTime.Update(SDL_GetTicks());
         fpsCounter.Update(gameTime);
-		ostringstream text;
+
+        std::ostringstream text;
         text << "University Racer - Diff:" << gameTime << ", FPS - " << fpsCounter << "; " << "GPU Mem: " << ((Game *)application)->statsString();
         SDL_WM_SetCaption(text.str().c_str(), NULL);
 
@@ -184,8 +183,8 @@ int main(int /*argc*/, char ** /*argv*/)
 		// cleanup
 		delete application;
 
-    } catch(exception & ex) {
-        cout << "ERROR : " << ex.what() << endl;        
+    } catch(std::exception & ex) {
+        std::cout << "ERROR : " << ex.what() << std::endl;
 		system("pause");
 		return EXIT_FAILURE;
     }

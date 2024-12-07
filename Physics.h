@@ -1,3 +1,10 @@
+/*
+ * Zapouzdruje veskerou praci s fyzikalni simulaci pomoci knihovny Bullet Physics (http://bulletphysics.org/).
+ * Cerpano z Bullet 2.79 Physics SDK Manual a Bullet demos, konkretne VehicleDemo.
+ * Oboji lze nalezt v archivu http://code.google.com/p/bullet/downloads/detail?name=bullet-2.79-rev2440.zip
+ * Dale vyuzity stranky knihovny, konkretne wiki a fora.
+ */
+
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
@@ -10,15 +17,10 @@
 #include "PhysicsDebugDraw.h"
 #include "BaseModel.h"
 
-#define FIXED_SIMULATION_TIMESTEP 1/120.f  /// pevny simulacni krok
-#define MAX_SIMULATION_SUBSTEPS   10       /// maximum simulacnich podkroku
+#define FIXED_SIMULATION_TIMESTEP 1/120.f  // pevny simulacni krok
+#define MAX_SIMULATION_SUBSTEPS   10       // maximum simulacnich podkroku
 
-/**
- * Zapouzdruje veskerou praci s fyzikalni simulaci pomoci knihovny Bullet Physics (http://bulletphysics.org/).
- * Cerpano z Bullet 2.79 Physics SDK Manual a Bullet demos, konkretne VehicleDemo.
- * Oboji lze nalezt v archivu http://code.google.com/p/bullet/downloads/detail?name=bullet-2.79-rev2440.zip
- * Dale vyuzity stranky knihovny, konkretne wiki a fora.
- */
+
 class Physics
 {
 public:
@@ -48,7 +50,6 @@ public:
     void AddCar(const btTransform & trans) { (m_car = new PhysicsCar())->Initialize(m_dynamicsWorld, trans); }    
 
 private:
-
     btCollisionDispatcher* m_dispatcher;
     btBroadphaseInterface* m_overlappingPairCache;
     btSequentialImpulseConstraintSolver* m_constraintSolver;

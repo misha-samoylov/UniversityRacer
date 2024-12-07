@@ -2,35 +2,22 @@
 
 using namespace std;
 
-Camera::Camera(void): currentSettleTime(0.f) {
+Camera::Camera(void): currentSettleTime(0.f)
+{
 	Reset();
 }
 
-
-void Camera::Reset() {
-    /*eye = glm::vec3(0.0f, 0.0f, -10.0f);
-	up = glm::vec3(0.0f, 1.0f, 0.0f);		
-	target = glm::vec3(0.0f, 0.0f, 1.0f);*/
-    
+void Camera::Reset()
+{
     eye = glm::vec3(38.435f, 11.41f, -27.451f);
 	up = glm::vec3(0.0f, 1.0f, 0.0f);		
 	target = glm::vec3(-0.623f, -0.124f, 0.772f);
 	angle_horiz = 0.0f;
 	angle_vert = 0.0f;
-
-	/*
-	isObserving = false;
-	observeCenter = Vector3f(0.0f, 0.0f, 0.0f);
-	observeRadius = 3.0f;
-	observeSpeed = 0.7f;
-	observeTimer.ResetTimer();
-	*/
 }
 
-
-
-void Camera::Move(float x, float y, float z) {
-	
+void Camera::Move(float x, float y, float z)
+{
 	// posunout o z-nasobek smeru pohledu
 	glm::vec3 dir = glm::normalize(target);	
 	eye += dir * z;
@@ -41,9 +28,8 @@ void Camera::Move(float x, float y, float z) {
 	eye += r * x;
 }
 
-
-void Camera::Aim(float vertical_angle, float horizontal_angle) {		
-
+void Camera::Aim(float vertical_angle, float horizontal_angle)
+{
 	// kamera se bude otacet po jednotkove kouli
 	angle_horiz += horizontal_angle;
 	angle_vert += vertical_angle;
@@ -69,44 +55,19 @@ void Camera::Aim(float vertical_angle, float horizontal_angle) {
 }
 
 
-glm::mat4 Camera::GetMatrix() {
-	/*
-	if (isObserving) {		
-		target = observeCenter;
-		eye = Vector3f( float(sin(observeTimer.f_Time() * observeSpeed)), target.y, 
-		float(cos(observeTimer.f_Time() * observeSpeed)) ) * observeRadius;
-
-		target = observeCenter - eye;
-		target.Normalize();
-		//target.y = cos(observeTimer.f_Time());
-		//target.z = 1.0f;
-
-		//Move(1, 0, 0);
-	}
-	*/
-	
+glm::mat4 Camera::GetMatrix()
+{
 	glm::mat4 m = glm::gtx::transform2::lookAt(eye, target + eye, up);
 	return m;	
 }
 
-
-
-void Camera::DebugDump() {
+void Camera::DebugDump()
+{
 	printf("----------------------------------------------------\n");
 	printf("pos %f %f %f\n", eye.x, eye.y, eye.z);
 	printf("target %f %f %f\n", target.x, target.y, target.z);
 	printf("up  %f %f %f\n", up.x, up.y, up.z);
 }
-
-/*
-void Camera::toggleObserve() {
-	isObserving = !isObserving;
-
-	if (isObserving)
-		observeCenter = Vector3f(2.78f, 2.73f, 2.73f);
-}
-*/
-
 
 /**
  * Kod naportovan z True Axis Physics SDK (http://trueaxis.com/physics/index.html)
@@ -127,11 +88,10 @@ void Camera::Follow(glm::mat4 & targetMat, glm::vec3 targetVelocity, const GameT
     // Using statics here because of lazy programming
     static glm::vec3 lastBaseLookFromPos = targetPos - targetRot[2] * 20.f;
     static float facing = 1.f;
-  //static float currentSettleTime = 0.f;
+    // static float currentSettleTime = 0.f;
 
     // camera intro
-    if (currentSettleTime < settleTime)
-    {
+    if (currentSettleTime < settleTime) {
         glm::vec3 defaultPos = targetPos - targetRot[2] * 20.f;
         if (currentSettleTime > settleTime - 1.f)
             lastBaseLookFromPos += (settleTime - currentSettleTime) * (defaultPos - lastBaseLookFromPos);
@@ -147,8 +107,7 @@ void Camera::Follow(glm::mat4 & targetMat, glm::vec3 targetVelocity, const GameT
     // This avoids camera going over the top of the car and flipping when 
     // changing velocity when going into reverse while looking forwards.
     float nudge = glm::length(lastBaseLookFromPos - targetPos);
-    if (nudge < viewDistance)
-    {
+    if (nudge < viewDistance) {
         nudge = viewDistance - nudge;
         lastBaseLookFromPos -= targetRot[0] * nudge * 1.1f;
         lastBaseLookFromPos.y += nudge * 0.2f;
@@ -183,8 +142,7 @@ void Camera::Follow(glm::mat4 & targetMat, glm::vec3 targetVelocity, const GameT
     
     lastBaseLookFromPos = currentLookFromPos;
 
-    if (glm::abs(lookDirection.y) <= 0.99f)
-    {
+    if (glm::abs(lookDirection.y) <= 0.99f) {
         glm::mat4 tmp = glm::lookAt(glm::vec3(0), lookDirection, glm::vec3(0, 1, 0));
         glm::mat3 m(tmp);
 
