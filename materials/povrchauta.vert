@@ -1,16 +1,8 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
-
 #version 130
+
 #define MAX_LIGHTS 4
 
-in vec3 position;  //pozice vertexu
+in vec3 position; // pozice vertexu
 in vec3 normal; // normala
 in vec2 texpos; // texturovaci souradnice
 
@@ -37,7 +29,6 @@ out vec3 eyeNormal; // normala zkomaneho bodu v prostoru OKA
 out vec3 eyePosition; // pozice zkoumaneho bodu v prostoru OKA
 
 out vec2 t; //texturovaci souradnice se predava do fragment shaderu
-
 
 void main() {
 	vec4 pos = vec4(position, 1.0);

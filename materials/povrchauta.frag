@@ -1,12 +1,3 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
-
 #version 130
 
 //Studium osvetlovaciho modelu
@@ -30,6 +21,7 @@ struct Material {
 	vec4 specular;
 	int shininess;
 };
+
 uniform Material material;
 
 //umoznuji vybrat ktere svetlo se bude kreslit
@@ -103,6 +95,7 @@ void main() {
 				finalColor = (texture(texture1,t) / MAX_LIGHTS) + finalColor;
 			}
 		}
-	} 
+	}
+
 	fragColor = finalColor;
 }

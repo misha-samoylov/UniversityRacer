@@ -112,7 +112,6 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelContainer.h" />
     <ClInclude Include="Physics.h" />

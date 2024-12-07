@@ -1,12 +1,3 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
-
 #version 130
 
 //Studium osvetlovaciho modelu
@@ -16,6 +7,7 @@
 
 #define MAX_LIGHTS 4
 #define ONE_DIV_MAX_LIGHTS 0.25
+
 uniform vec4 lights[30]; // kazde tri vektory odpovidaji jednomu svetlu: pozice, difuzni, ambientni slozka; max 10 svetel
 uniform int enabledLights; // pocet pouzitych svetel (naplnenych do lights)
 

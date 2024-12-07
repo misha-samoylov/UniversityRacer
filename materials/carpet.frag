@@ -1,12 +1,3 @@
-// +------------------------------------------------------------+
-// |                      University Racer                      |
-// |         Projekt do PGR a GMU, FIT VUT v Brne, 2011         |
-// +------------------------------------------------------------+
-// |  Autori:  Tomáš Kimer,  xkimer00@stud.fit.vutbr.cz         |
-// |           Tomáš Sychra, xsychr03@stud.fit.vutbr.cz         |
-// |           David Šabata, xsabat01@stud.fit.vutbr.cz         |
-// +------------------------------------------------------------+
-
 #version 130
 
 //Studium osvetlovaciho modelu
@@ -41,14 +32,12 @@ uniform int enabledLights; // pocet pouzitych svetel (naplnenych do lights)
 in vec3 tanCam;
 in vec3 tanLightDir[MAX_LIGHTS];
 
-
 ///////TEXTURY//////
 uniform sampler2D texture1; //color map
 uniform sampler2D texture2; //normal map
 uniform sampler2D texture3; //height map
 
 uniform bool useTexture; //jsou-li samplery naplnene, tak vraci true
-
 
 //texture coordinates
 in vec2 t;
