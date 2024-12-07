@@ -217,5 +217,8 @@
     <None Include="3ds\README">
       <Filter>Header Files\3ds</Filter>
     </None>
+    <None Include="ROADMAP.md">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

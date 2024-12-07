@@ -130,6 +130,7 @@
     <None Include="3ds\README" />
     <None Include="LICENSE.txt" />
     <None Include="README.md" />
+    <None Include="ROADMAP.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

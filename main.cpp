@@ -18,6 +18,24 @@ using namespace std;
 // Pointer to active application instance, which will recieve and handle SDL events
 BaseApp* application = NULL;
 
+void PrintGLVersion()
+{
+	const GLubyte *renderer = glGetString(GL_RENDERER);
+	const GLubyte *vendor = glGetString(GL_VENDOR);
+	const GLubyte *version = glGetString(GL_VERSION);
+	const GLubyte *glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+	GLint major, minor;
+	glGetIntegerv(GL_MAJOR_VERSION, &major);
+	glGetIntegerv(GL_MINOR_VERSION, &minor);
+
+	printf("GL Vendor: %s\n", vendor);
+	printf("GL Renderer: %s\n", renderer);
+	printf("GL Version (string): %s\n", version);
+	printf("GL Version (integer): %d.%d\n", major, minor);
+	printf("GLSL Version: %s\n", glslVersion);
+}
+
 SDL_Surface * init(unsigned width, unsigned height, unsigned color, unsigned depth, unsigned stencil)
 {
     // Set OpenGL attributes
@@ -43,7 +61,10 @@ SDL_Surface * init(unsigned width, unsigned height, unsigned color, unsigned dep
 		// Problem: glewInit failed, something is seriously wrong.
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 	}
-	//fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+	fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+
+	PrintGLVersion();
+
 #endif
 	// Create the Game and set as current application
 	application = new Game;
