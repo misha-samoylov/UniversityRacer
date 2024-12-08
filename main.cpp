@@ -47,10 +47,10 @@ void PrintGLVersion()
 SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth, unsigned stencil)
 {
     // Set OpenGL attributes
-    //if (SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, color) < 0) throw SDL_Exception();
-    //if (SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depth) < 0) throw SDL_Exception();
-    //if (SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, stencil) < 0) throw SDL_Exception();
-    //if (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) throw SDL_Exception();
+    if (SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, color) < 0) throw SDL_Exception();
+    if (SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depth) < 0) throw SDL_Exception();
+    if (SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, stencil) < 0) throw SDL_Exception();
+    if (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) throw SDL_Exception();
 
 	// Zapnout antialiasing
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
