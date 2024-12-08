@@ -27,7 +27,7 @@ Controls:
 # System requirements
 
 * Windows XP and above
-* OpenGL
+* OpenGL 3.1
 
 # Dependencies
 
