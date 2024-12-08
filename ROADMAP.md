@@ -9,7 +9,7 @@
 
 ## Update libs
 
-* [ ] Update to SDL2
+* [x] Update to SDL2
 * [ ] Update to SDL3
 * [ ] Update glm to last version
 * [ ] Update Bullet Physics to last version
