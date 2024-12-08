@@ -341,7 +341,7 @@ void ShadowVolumes::computeNeighboursAndVisibilities()
 
 		// ulozit viditelnosti
 		meshFacesVisibilities[meshI] = faceVisibilities;
-	}	
+	}
 }
 
 void ShadowVolumes::draw(unsigned int lightI, glm::mat4 mView, glm::mat4 mProjection)

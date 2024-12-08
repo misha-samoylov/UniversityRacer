@@ -155,7 +155,9 @@ ShaderManager::PROGRAMBINDING ShaderManager::getCurrentProgram()
 GLuint ShaderManager::loadTexture(std::string path)
 {
 	SDL_Surface * surface = SDL_LoadBMP(path.c_str());
-	if(surface == NULL) throw SDL_Exception();
+
+	if(surface == NULL)
+		throw SDL_Exception();
 
 	GLuint handle;
 
@@ -233,9 +235,19 @@ std::string ShaderManager::loadFile(const char * const file)
 // Info log contains errors and warnings from shader compilation
 std::string ShaderManager::getShaderInfoLog(const GLuint shader)
 {
-    int length;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-    std::string log(length, ' ');
+	//GLint status;
+	//char err_buf[512];
+	//glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+	//if (status != GL_TRUE) {
+	//	glGetShaderInfoLog(shader, sizeof(err_buf), NULL, err_buf);
+	//	err_buf[sizeof(err_buf) - 1] = '\0';
+	//	printf("shader compilation failed: %s\n", err_buf);
+	//}
+
+	std::string log = "";
+   // int length;
+    //glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
+    //std::string log(length, ' ');
     // glGetShaderInfoLog(shader, length, NULL, &log[0]);
     return log;
 }
@@ -376,6 +388,10 @@ void ShaderManager::verticalSurfaceFlip(SDL_Surface*& image)
 	SDL_Surface* flipped_image = SDL_CreateRGBSurface( SDL_SWSURFACE, image->w, image->h, image->format->BitsPerPixel,
 		image->format->Rmask, image->format->Gmask, image->format->Bmask, image->format->Amask );
 	
+	if (flipped_image == NULL) {
+		printf("flipped_image = NULL \n");
+	}
+
 	// loop through pixels    
 	for ( int y=0; y<image->h; y++ ) {
 		for ( int x=0; x<image->w; x++ ) {            

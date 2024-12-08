@@ -44,27 +44,41 @@ void PrintGLVersion()
 	printf("GLSL Version: %s\n", glslVersion);
 }
 
-SDL_Surface *Init(unsigned width, unsigned height, unsigned color, unsigned depth, unsigned stencil)
+SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth, unsigned stencil)
 {
     // Set OpenGL attributes
-    if (SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, color) < 0) throw SDL_Exception();
-    if (SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depth) < 0) throw SDL_Exception();
-    if (SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, stencil) < 0) throw SDL_Exception();
-    if (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) throw SDL_Exception();
+    //if (SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, color) < 0) throw SDL_Exception();
+    //if (SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, depth) < 0) throw SDL_Exception();
+    //if (SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, stencil) < 0) throw SDL_Exception();
+    //if (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) throw SDL_Exception();
 
 	// Zapnout antialiasing
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    //SDL_GL_SetAttribute(
+    //    SDL_GL_CONTEXT_PROFILE_MASK,
+    //    SDL_GL_CONTEXT_PROFILE_CORE);
 
     // Create window
-    SDL_Surface * screen = SDL_SetVideoMode(width, height, color, SDL_OPENGL | SDL_RESIZABLE);
+    SDL_Window* screen = SDL_CreateWindow("University Racer X",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        width, height,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+    );
+
     if (screen == NULL)
         throw SDL_Exception();
-	
-	SDL_WM_SetCaption("University Racer X", "University Racer X");
+
+    SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
+    // SDL_GL_DeleteContext(glcontext);
 
 	// Inicializace glew
 	GLenum err = glewInit();
+    glewExperimental = GL_TRUE; // Please expose OpenGL 3.x+ interfaces
 	if (GLEW_OK != err) {
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 	}
@@ -73,56 +87,62 @@ SDL_Surface *Init(unsigned width, unsigned height, unsigned color, unsigned dept
 	PrintGLVersion();
 
 	application = new Game();
-    application->onInit();
+    application->onInit(screen);
     application->onWindowResized(width, height);
 
     return screen;	
 }
 
-void MainLoop()
+void MainLoop(SDL_Window *window)
 {
     // Window is not minimized
-    bool active = true;
+    //bool active = true;
 
     GameTime gameTime;
     gameTime.Init(SDL_GetTicks());
 
     FpsCounter fpsCounter;
 
+    SDL_Event event;
+
     for(;;) // Infinite loop
     {
-        SDL_Event event;
+        //glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-        // Wait for event
-        if (SDL_WaitEvent(&event) == 0)
-            throw SDL_Exception();
 
         // Screen needs redraw
-        bool redraw = false;
+        //bool redraw = true;
 		
 		// aktualizovat FPS
 		//updateFPS(SDL_GetTicks());
         gameTime.Update(SDL_GetTicks());
         fpsCounter.Update(gameTime);
 
-        std::ostringstream text;
-        text << "University Racer - Diff:" << gameTime << ", FPS - " << fpsCounter << "; " << "GPU Mem: " << ((Game *)application)->statsString();
-        SDL_WM_SetCaption(text.str().c_str(), NULL);
+        //char text[256];
+        //sscanf(text, "University Racer - Diff: %d, FPS %d, fpscounter %d", gameTime, fpsCounter, ((Game *)application)->statsString());
+        //sscanf(text, "University Racer - FPS %d, ", fpsCounter);
+        //SDL_WM_SetCaption(text.str().c_str(), NULL);
+
+        //SDL_SetWindowTitle(window, "OK");
 
         // Handle all waiting events
-        do {
+        //Handle events on queue
+        while (SDL_PollEvent(&event) != 0)
+        {
+            
+        
             // Call proper event handlers
-            switch(event.type) {
+            switch (event.type) {
                 // Stop redraw when minimized
-				case SDL_ACTIVEEVENT :
-                    if(event.active.state == SDL_APPACTIVE)
-                        active = (event.active.gain != 0);
-                    break;
+				//case SDL_ACTIVEEVENT:
+                //    if(event.active.state == SDL_APPACTIVE)
+                //        active = (event.active.gain != 0);
+                //    break;
 
 				// Set redraw flag
-                case SDL_VIDEOEXPOSE :
-                    redraw = true;
-                    break;
+                //case SDL_VIDEOEXPOSE:
+                //    redraw = true;
+                //    break;
 					
 				// End main loop
 				case SDL_QUIT :
@@ -134,7 +154,7 @@ void MainLoop()
                 case SDL_MOUSEMOTION :                    
                 case SDL_MOUSEBUTTONDOWN :                    
                 case SDL_MOUSEBUTTONUP :                    
-                case SDL_VIDEORESIZE :
+                case SDL_WINDOWEVENT_RESIZED: //SDL_VIDEORESIZE :
 					application->handleEvent(event);
 					break;
 
@@ -142,18 +162,31 @@ void MainLoop()
                 default :
                     break;
             }
-        } while(SDL_PollEvent(&event) == 1);
+        }
 
-        // Optionally redraw window
-        if (active && redraw) application->onWindowRedraw(gameTime);
+        application->onWindowRedraw(gameTime);
 
-		// immediately fire redraw event
-		SDL_Event nextFrameEvent;
-		nextFrameEvent.type = SDL_VIDEOEXPOSE;
+#ifdef _DEBUG
+        GLenum err;
+        while ((err = glGetError()) != GL_NO_ERROR)
+        {
+            std::string error;
 
-		if (SDL_PushEvent(&nextFrameEvent) < 0)
-            throw SDL_Exception();
+            switch (err)
+            {
+            case GL_INVALID_ENUM:                  error = "INVALID_ENUM"; break;
+            case GL_INVALID_VALUE:                 error = "INVALID_VALUE"; break;
+            case GL_INVALID_OPERATION:             error = "INVALID_OPERATION"; break;
+            case GL_STACK_OVERFLOW:                error = "STACK_OVERFLOW"; break;
+            case GL_STACK_UNDERFLOW:               error = "STACK_UNDERFLOW"; break;
+            case GL_OUT_OF_MEMORY:                 error = "OUT_OF_MEMORY"; break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
+            }
+
+            printf("err %s \n", error.c_str());
+        }
     }
+#endif
 }
 
 int main(int argc, char **argv)
@@ -166,12 +199,12 @@ int main(int argc, char **argv)
 #endif
 
 	try {
-        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
             throw SDL_Exception();
         
-        Init(800, 600, 24, 24, 8);
+        SDL_Window *window = Init(800, 600, 24, 24, 8);
 
-		MainLoop();
+		MainLoop(window);
 
 		delete application;
 

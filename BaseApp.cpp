@@ -35,8 +35,8 @@ void BaseApp::handleEvent(SDL_Event event)
 		case SDL_MOUSEBUTTONUP :
 			onMouseUp(event.button.button, event.button.x, event.button.y);
 			break;
-		case SDL_VIDEORESIZE:
-			onWindowResized(event.resize.w, event.resize.h);
+		case SDL_WINDOWEVENT_RESIZED:
+			onWindowResized(event.window.data1, event.window.data2); // ???
 			break;
 		default :
 			break;
@@ -50,7 +50,7 @@ void BaseApp::onWindowResized(int w, int h)
 	windowHeight = h;
 }
 
-void BaseApp::onKeyDown(SDLKey key, Uint16 /*mod*/)
+void BaseApp::onKeyDown(SDL_Keycode key, Uint16 /*mod*/)
 {
 	activeKeys.remove(key); // chceme mit kazdou klavesu jen jednou
 	activeKeys.push_back(key);
@@ -61,7 +61,7 @@ void BaseApp::onKeyDown(SDLKey key, Uint16 /*mod*/)
 	}
 }
 
-void BaseApp::onKeyUp(SDLKey key, Uint16 /*mod*/)
+void BaseApp::onKeyUp(SDL_Keycode key, Uint16 /*mod*/)
 {
 	activeKeys.remove(key);
 }
@@ -83,6 +83,6 @@ void BaseApp::onWindowRedraw(const GameTime & gameTime)
 {	
 }
 
-void BaseApp::onInit()
+void BaseApp::onInit(SDL_Window *window)
 {
 }

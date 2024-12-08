@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 
+#include <SDL.h>
+
 #include "BaseApp.h"
 #include "Scene.h"
 #include "Gui.h"
@@ -23,19 +25,21 @@ class Game : public BaseApp
 public:
 	Game();
 	~Game();
-	void onInit();
+	void onInit(SDL_Window *window);
 	void onWindowRedraw(const GameTime & gameTime);
 	void onWindowResized(int w, int h);
 		
     void drawLines(std::vector<PhysicsDebugDraw::LINE> & lines); // vykresli usecky
 
 	void handleActiveKeys(const GameTime & gameTime);		
-	void onKeyDown(SDLKey key, Uint16 mod);
+	void onKeyDown(SDL_Keycode key, Uint16 mod);
 	void onMouseMove(unsigned x, unsigned y, int xrel, int yrel, Uint8 buttons);
 
     std::string statsString(); // vraci statistiku - pocet vrcholu, facu,...
 
 protected:
+	SDL_Window* m_window;
+
 	Scene* scene;
 	Gui* gui;
     ModelContainer* container;

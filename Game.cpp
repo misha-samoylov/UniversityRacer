@@ -18,12 +18,14 @@ Game::~Game()
 	delete physics;
 }
 
-void Game::onInit()
+void Game::onInit(SDL_Window* window)
 {
-	BaseApp::onInit();
+	BaseApp::onInit(window);
+
+	m_window = window;
 
 	printf("The Game is loading:\n");
-	printf("- loading models");
+	printf("- loading models\n");
 
 	// nacist modely	
 	container = new ModelContainer();
@@ -44,7 +46,7 @@ void Game::onInit()
 
     physics->AddCar(PhysicsUtils::btTransFrom(btVector3(36.2f, 8.95f, -21.7f), btQuaternion(btVector3(0, 1, 0), -M_PI/2.f))); // 0, 2, 5
 
-	printf("- setting up drawing queue");
+	printf("- setting up drawing queue\n");
 
 	// vykresli E112
 	if (1) {
@@ -530,7 +532,7 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 #endif
 	// ---------------------------------------
 
-    SDL_GL_SwapBuffers(); 
+	SDL_GL_SwapWindow(m_window);
 }
 
 void Game::drawLines(std::vector<PhysicsDebugDraw::LINE> & lines)
@@ -632,19 +634,18 @@ void Game::handleActiveKeys(const GameTime & gameTime)
         physics->GetCar()->TurnRight();
 }
 
-void Game::onKeyDown(SDLKey key, Uint16 mod)
+void Game::onKeyDown(SDL_Keycode key, Uint16 mod)
 {
 	BaseApp::onKeyDown(key, mod);
 
 	// mezernik zamyka mys pro ovladani kamery
 	if (key == SDLK_m) {
 		mouseCaptured = !mouseCaptured;
-		SDL_ShowCursor(!mouseCaptured);
-
+		
 		if (mouseCaptured)
-			SDL_WM_GrabInput(SDL_GRAB_ON);
+			SDL_SetRelativeMouseMode(SDL_TRUE);
 		else
-			SDL_WM_GrabInput(SDL_GRAB_OFF);
+			SDL_SetRelativeMouseMode(SDL_FALSE);
 	}
 
 	// TAB prepina mezi vyplnenym kreslenim a wireframe

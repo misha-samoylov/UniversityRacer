@@ -53,11 +53,11 @@ void Scene::Init()
 
 
 #if 0
-	cout << "Scene: " << containers.size() << " containers" << endl;
+	std::cout << "Scene: " << containers.size() << " containers" << std::endl;
 	for (unsigned int i = 0; i < containers.size(); i++)
 	{
-		cout << i << endl;
-		cout << "\tmodels: " << containers[i]->modelsCount() << "\tverts: " << containers[i]->verticesCount() << "\tfaces: " << containers[i]->facesCount() << endl;
+		std::cout << i << std::endl;
+		std::cout << "\tmodels: " << containers[i]->modelsCount() << "\tverts: " << containers[i]->verticesCount() << "\tfaces: " << containers[i]->facesCount() << std::endl;
 	}
 #endif
 
@@ -202,6 +202,7 @@ void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledL
 			lightI++;
 		}
 	}
+	
 
 	// pohledova matice
 	glm::mat4 mView = application.getCamera()->GetMatrix();
