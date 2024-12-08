@@ -118,11 +118,6 @@ public:
 	}
 
 	/*
-	 * Asociuje konkretni hodnoty s promennymi programu
-	 */
-	static void setMaterialParams(std::string material, MATERIALPARAMS params);
-
-	/*
 	 * Nastavi program jako aktualni pro kresleni
 	 * a soucasne vraci jeho strukturu
 	 */

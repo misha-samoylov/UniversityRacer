@@ -1,6 +1,5 @@
 #include "Physics.h"
 
-
 Physics::Physics(void): m_car(NULL)
 {
     Initialize();
@@ -65,17 +64,10 @@ void Physics::Deinitialize()
 
 void Physics::StepSimulation(btScalar timeStep)
 {
-    if (m_car) m_car->Update(timeStep);
+    if (m_car)
+        m_car->Update(timeStep);
 
-    int numSimSteps = m_dynamicsWorld->stepSimulation(timeStep, MAX_SIMULATION_SUBSTEPS, FIXED_SIMULATION_TIMESTEP);
-
-    /*if (!numSimSteps)	std::cout << "Interpolated transforms" << std::endl;
-	else  {
-		if (numSimSteps > MAX_SIMULATION_SUBSTEPS) // detect dropping frames			
-			std::cout << "Dropped " << numSimSteps - MAX_SIMULATION_SUBSTEPS << " simulation steps out of " << numSimSteps << std::endl;
-        else
-			std::cout << "Simulated " << numSimSteps << " steps" << std::endl;
-	}*/
+    m_dynamicsWorld->stepSimulation(timeStep, MAX_SIMULATION_SUBSTEPS, FIXED_SIMULATION_TIMESTEP);
 }
 
 btRigidBody * Physics::AddRigidBody(float mass, const btTransform & startTransform, btCollisionShape * shape)

@@ -22,6 +22,22 @@
 #include <GL/glew.h>
 #include <GL/glu.h>
 
+ // vypnout otravne warningy Visual Studia; nasim iteratorum verime :)
+#define _SCL_SECURE_NO_WARNINGS
+
+// glm neumi porovnat dva vektory
+#define VEC3_EQ(A,B) ((A.x == B.x && A.y == B.y && A.z == B.z))
+
+#define PROGRAM_NAME "test"
+#define INFINITY 1
+#define EPSILON 0.0005f
+
+// pomocne definy pro testovani
+#define DRAW_VISIBLE_FACES 0
+#define DRAW_VOLUME 1
+#define DRAW_VOLUME_LINES 0
+#define DRAW_CAPS 1
+
 #include "Mesh.h"
 #include "BaseModel.h"
 #include "ShaderManager.h"

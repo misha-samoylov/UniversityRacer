@@ -80,10 +80,6 @@ void Gui::updateData()
 		for (unsigned int i = 0; i < str.size(); i++)
 		{			
 			LTRTEXCOORDS tex = getCharTexCoords(str[i]);
-			//tex.topleft.x += 0.01;
-			//tex.topright.x -= 0.01;
-			//tex.btmleft.x += 0.01;
-			//tex.btmright -= 0.01;
 
 			vertices.push_back(topleft.x + i * letterWidth);
 			vertices.push_back(topleft.y);

@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "BaseApp.h"
 
+#define UNUSED_SHADER_ATTR -1
 
 // forward-declaration; Scene a BaseApp se potrebuji vzajemne znat
 class BaseApp;

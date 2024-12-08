@@ -1,10 +1,7 @@
 #include "Scene.h"
 
-#define UNUSED_SHADER_ATTR -1
 
-using namespace std;
-
-/**
+/*
  * Jeden vrchol ve VBO slozeny ze souradnic, normaly a souradnic textury
  */
 typedef struct VBOENTRY {
@@ -14,7 +11,6 @@ typedef struct VBOENTRY {
 	float u, v;			// textura
 } VBOENTRY;
 
-
 Scene::Scene(BaseApp& parentApp) : application(parentApp)
 {
 }
@@ -22,7 +18,7 @@ Scene::Scene(BaseApp& parentApp) : application(parentApp)
 Scene::~Scene() 
 {
 	// uvolnit obsah kontejneru
-	for (vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
+	for (std::vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
 	{
 		delete (*it);
 	}
@@ -34,13 +30,10 @@ Scene::~Scene()
 		glDeleteBuffers(EBOs.size(), &EBOs[0]);
 }
 
-
-
 void Scene::addModelContainer(ModelContainer* container)
 {
 	containers.push_back(container);
 }
-
 
 std::vector<ModelContainer*> &Scene::getModelContainers()
 {
@@ -53,7 +46,7 @@ void Scene::Init()
 	buildBufferObjects();
 
 	// zoptimalizovat vsechny konterjnery
-	for (vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
+	for (std::vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
 	{
 		(*it)->optimizeDrawingQueue();
 	}
@@ -70,13 +63,12 @@ void Scene::Init()
 
 }
 
-
 void Scene::buildBufferObjects()
 {
-	for (vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
+	for (std::vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
 	{
 		ModelContainer* container = (*it);
-		vector<BaseModel*> models = container->getModels();
+		std::vector<BaseModel*> models = container->getModels();
 		
 		// VBO /////////////////////////////////////////////////////////
 		{
@@ -92,11 +84,11 @@ void Scene::buildBufferObjects()
 			VBOENTRY* mapping = (VBOENTRY*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
 			// naplneni daty
-			for (vector<BaseModel*>::iterator modelit = models.begin(); modelit != models.end(); modelit++)
+			for (std::vector<BaseModel*>::iterator modelit = models.begin(); modelit != models.end(); modelit++)
 			{
 				BaseModel* model = (*modelit);
 
-				for (vector<Mesh*>::iterator meshit = model->getMeshes().begin(); meshit != model->getMeshes().end(); meshit++)
+				for (std::vector<Mesh*>::iterator meshit = model->getMeshes().begin(); meshit != model->getMeshes().end(); meshit++)
 				{
 					Mesh* mesh = (*meshit);
 
@@ -148,7 +140,7 @@ void Scene::buildBufferObjects()
 			unsigned int indexOffset = 0; // kolik indexu uz bylo zapsano; nutno pricitat pocty vrcholu (!) predchozich meshi
 
 			// naplneni daty
-			for (vector<BaseModel*>::iterator modelit = models.begin(); modelit != models.end(); modelit++)
+			for (std::vector<BaseModel*>::iterator modelit = models.begin(); modelit != models.end(); modelit++)
 			{
 				BaseModel* model = (*modelit);
 				
@@ -184,19 +176,19 @@ void Scene::buildBufferObjects()
 
 
 
-void Scene::draw(bool drawAmbient, bool drawLighting, vector<bool> enabledLights) 
+void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledLights)
 {	
-	string activeMaterial = "?_dummy_?";
+	std::string activeMaterial = "?_dummy_?";
 	ShaderManager::PROGRAMBINDING activeBinding;
 	
 	// pripravit si pole svetel ze vsech kontejneru
-	vector<glm::vec4> lights;
+	std::vector<glm::vec4> lights;
 	
 	unsigned int lightI = 0;
 	for (unsigned int i = 0; i < containers.size(); i++)
 	{
-		vector<Light> containerLights = containers.at(i)->getLights();
-		for (vector<Light>::iterator it = containerLights.begin(); it != containerLights.end(); it++)
+		std::vector<Light> containerLights = containers.at(i)->getLights();
+		for (std::vector<Light>::iterator it = containerLights.begin(); it != containerLights.end(); it++)
 		{
 			// pridat svetlo pouze pokud ma byt rozsvicene nebo pokud jsme pouzili implicitni
 			// parametr a pole enabledLights je prazdne
@@ -211,16 +203,12 @@ void Scene::draw(bool drawAmbient, bool drawLighting, vector<bool> enabledLights
 		}
 	}
 
-
-
 	// pohledova matice
 	glm::mat4 mView = application.getCamera()->GetMatrix();
 	
 	// projekcni matice
 	glm::mat4 mProjection = glm::perspective(45.0f, (float)application.getWindowAspectRatio(), 0.1f, 1000.0f);	
-	
-
-	
+		
 	// samotne kresleni
 	for (unsigned int i = 0; i < containers.size(); i++)
 	{						
@@ -229,17 +217,17 @@ void Scene::draw(bool drawAmbient, bool drawLighting, vector<bool> enabledLights
 
 		// postupne provadet kreslici frontu meshi kontejneru, slozenou z kreslene meshe a jeji matice;
 		// pokud probehla optimalizace, budou meshe navic serazene podle pouzivaneho materialu
-		vector<ModelContainer::MESHDRAWINGQUEUEITEM> drawingQueue = containers[i]->getMeshDrawingQueue();
+		std::vector<ModelContainer::MESHDRAWINGQUEUEITEM> drawingQueue = containers[i]->getMeshDrawingQueue();
 	
 
-		for (vector<ModelContainer::MESHDRAWINGQUEUEITEM>::iterator it = drawingQueue.begin(); it != drawingQueue.end(); it++)
+		for (std::vector<ModelContainer::MESHDRAWINGQUEUEITEM>::iterator it = drawingQueue.begin(); it != drawingQueue.end(); it++)
 		{
 			Mesh* mesh = (*it).mesh;
-			string meshMaterial = mesh->getMaterialName();			
+			std::string meshMaterial = mesh->getMaterialName();
 
 			// za material se povazuje jen nazev pred podtrzitkem
-			string::size_type pos = meshMaterial.find("_");
-			if (pos != string::npos)
+			std::string::size_type pos = meshMaterial.find("_");
+			if (pos != std::string::npos)
 				meshMaterial = meshMaterial.substr(0, pos);
 
 			// prepinat shadery jen pokud je treba

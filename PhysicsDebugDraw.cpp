@@ -1,6 +1,5 @@
 #include "PhysicsDebugDraw.h"
 
-
 void PhysicsDebugDraw::drawLine(const btVector3& from,const btVector3& to,const btVector3& color)
 {
     glm::vec3 src(from.x(), from.y(), from.z());

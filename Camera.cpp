@@ -148,7 +148,6 @@ void Camera::Follow(glm::mat4 & targetMat, glm::vec3 targetVelocity, const GameT
 
         currentLookFromPos += lookFromPos * m;
         glm::vec3 currentLookAtPos = lookDirection;
-     // glm::vec3 currentLookAtPos = targetPos + lookAtPos * m;
 
         eye = currentLookFromPos;
         target = currentLookAtPos;

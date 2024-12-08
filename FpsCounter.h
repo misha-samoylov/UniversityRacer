@@ -1,3 +1,9 @@
+/**
+ * Pocita FPS a udrzuje nejlepsi, nejhorsi a prumerne hodnoty.
+ * Inspirovano podle knihovny OGRE (http://www.ogre3d.org/)
+ * Konkretne tridou RenderTarget (http://www.ogre3d.org/docs/api/html/classOgre_1_1RenderTarget.html)
+ */
+
 #ifndef FPSCOUNTER_H
 #define FPSCOUNTER_H
 
@@ -7,11 +13,6 @@
 #include "GameTime.h"
 
 
-/**
- * Pocita FPS a udrzuje nejlepsi, nejhorsi a prumerne hodnoty.
- * Inspirovano podle knihovny OGRE (http://www.ogre3d.org/)
- * Konkretne tridou RenderTarget (http://www.ogre3d.org/docs/api/html/classOgre_1_1RenderTarget.html)
- */
 class FpsCounter
 {
 public:

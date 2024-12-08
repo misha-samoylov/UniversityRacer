@@ -1,10 +1,8 @@
 #include "PhysicsUtils.h"
 
-
 PhysicsUtils::PhysicsUtils(void)
 {
 }
-
 
 PhysicsUtils::~PhysicsUtils(void)
 {

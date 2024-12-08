@@ -38,9 +38,6 @@ void BaseApp::handleEvent(SDL_Event event)
 		case SDL_VIDEORESIZE:
 			onWindowResized(event.resize.w, event.resize.h);
 			break;
-		/*case SDL_VIDEOEXPOSE:
-			onWindowRedraw();
-			break;*/
 		default :
 			break;
 	}

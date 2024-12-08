@@ -1,6 +1,5 @@
 #include "Mesh.h"
 
-
 Mesh::Mesh(std::string name, std::string materialName, std::vector<glm::vec3> vertices,
 	std::vector<glm::ivec3> faces, std::vector<glm::vec2> texcoords) :
 	name(name), materialName(materialName), vertices(vertices), faces(faces),

@@ -1,6 +1,5 @@
 #include "PhysicsCheckpoint.h"
 
-
  void PhysicsCheckpoint::Initialize(btDiscreteDynamicsWorld *refWorld)
 {
         m_ghostPairCallback = new btGhostPairCallback();

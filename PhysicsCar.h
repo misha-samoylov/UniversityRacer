@@ -1,4 +1,4 @@
-/**
+/*
  * Fyzikalni simulace auta.
  * Cerpano z dokumentu Bullet 2.79 Physics SDK Manual a Vehicle Simulation With Bullet (http://tinyurl.com/ydfb7lm).
  * Dale cerpano z VehicleDemo, z nehoz byla vyuzita zakladni kostra kodu.

@@ -44,8 +44,6 @@ void Game::onInit()
 
     physics->AddCar(PhysicsUtils::btTransFrom(btVector3(36.2f, 8.95f, -21.7f), btQuaternion(btVector3(0, 1, 0), -M_PI/2.f))); // 0, 2, 5
 
-	// physics->AddRigidBody(5., PhysicsUtils::btTransFrom(btVector3(0, 3, 1)), new btBoxShape(btVector3(0.75,0.75,0.75)))->setAngularVelocity(btVector3(1,1,1)); // TODO konstruktor se neprelozi kvuli Debug.h
-
 	printf("- setting up drawing queue");
 
 	// vykresli E112
@@ -143,7 +141,6 @@ void Game::onInit()
 			// prava strana
 			glm::mat4 mat = glm::translate(col, otherside);
 			container->queueDraw(sidedesk, mat);
-			//shadowVolumes->addModel(sidedesk, mat);
 
             physics->AddStaticModel(sidedeskShapes, PhysicsUtils::btTransFrom(glm::scale(mat, glm::vec3(1/STATICS_SCALE))), false);
 		}
@@ -159,7 +156,6 @@ void Game::onInit()
 		{
 			glm::vec4 pos = (*it).Position();
 			glm::mat4 mat = glm::scale(glm::translate(pos.x, pos.y, pos.z), glm::vec3(0.001));
-			//glm::mat4 mat = glm::translate(glm::scale(glm::vec3(0.01)), pos.x, pos.y, pos.z);
 
 			container->queueDraw(sphere, mat);
 			shadowVolumes->addLight(glm::vec3(pos));
@@ -396,7 +392,7 @@ void Game::onWindowRedraw(const GameTime & gameTime)
 	handleActiveKeys(gameTime);
 
 
-	// fyzika -------------------------------------------------
+	// fyzika
     physics->StepSimulation(gameTime.Elapsed().ms() * 0.001f);
     physics->Checkpoint().Collision(physics->GetCar()->GetVehicle()->getRigidBody(), gameTime);
     
@@ -616,9 +612,6 @@ void Game::handleActiveKeys(const GameTime & gameTime)
 	bool dDown = ( find(activeKeys.begin(), activeKeys.end(), SDLK_d) != activeKeys.end() );	
 	
 	// chceme aby byla rychlost pohybu nezavisla na fps
-	//float f_fps = float(1 / getFPS());
-	//float f_step = float(WALK_SPEED / f_fps);
-	//float f_step = float(WALK_SPEED / getFPS());
     float f_step = gameTime.Elapsed().ms() * WALK_SPEED;
 
 	// vysledkem jsou slozky vektoru ve smerech X ("strafe", ne otaceni) a Z
@@ -699,10 +692,6 @@ void Game::onKeyDown(SDLKey key, Uint16 mod)
 		std::map<std::string, std::string>::const_iterator substIt = substitutions.find("desk");
 		if (substIt == substitutions.end()) {
 			ShaderManager::addShaderSubstitution("desk", "glossy");
-
-			// je potreba zkopirovat i materialove vlastnosti puvodniho povrchu
-			//ShaderManager::MATERIALPARAMS params = ShaderManager::getMaterialParams("desk");
-			//ShaderManager::setMaterialParams("desk_soft", params);
 		} else
 			ShaderManager::removeShaderSubstitution("desk");
 	}
