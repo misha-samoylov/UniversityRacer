@@ -4,7 +4,7 @@
 
 * [x] Remove GLEE lib
 * [x] Remove unused preprocessor defines
-* [ ] Remove commented code
+* [x] Remove commented code
 * [ ] Remove commented unused information
 
 ## Update libs
