@@ -1,29 +1,17 @@
 #include "Scene.h"
 
-
-/*
- * Jeden vrchol ve VBO slozeny ze souradnic, normaly a souradnic textury
- */
-typedef struct VBOENTRY {
-	float x, y, z;		// souradnice
-	float nx, ny, nz;	// normala
-	float tx, ty, tz;	// tangenta
-	float u, v;			// textura
-} VBOENTRY;
-
 Scene::Scene(BaseApp& parentApp) : application(parentApp)
 {
 }
 
 Scene::~Scene() 
 {
-	// uvolnit obsah kontejneru
-	for (std::vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++)
-	{
+	// Cleanup content container
+	for (std::vector<ModelContainer*>::iterator it = containers.begin(); it != containers.end(); it++) {
 		delete (*it);
 	}
 
-	// uvolnit buffery
+	// Release buffers
 	if (VBOs.size() > 0)
 		glDeleteBuffers(VBOs.size(), &VBOs[0]);
 	if (EBOs.size() > 0)
@@ -40,7 +28,6 @@ std::vector<ModelContainer*> &Scene::getModelContainers()
 	return containers;
 }
 
-
 void Scene::Init()
 {
 	buildBufferObjects();
@@ -52,7 +39,7 @@ void Scene::Init()
 	}
 
 
-#if 0
+#if 1
 	std::cout << "Scene: " << containers.size() << " containers" << std::endl;
 	for (unsigned int i = 0; i < containers.size(); i++)
 	{
@@ -70,20 +57,21 @@ void Scene::buildBufferObjects()
 		ModelContainer* container = (*it);
 		std::vector<BaseModel*> models = container->getModels();
 		
-		// VBO /////////////////////////////////////////////////////////
+		/*
+		 * VBO
+		 */
 		{
 			GLuint vbo;
 			glGenBuffers(1, &vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			VBOs.push_back(vbo);
 
-			// alokovat misto v bufferu
-			glBufferData(GL_ARRAY_BUFFER, container->verticesCount() * sizeof(VBOENTRY), NULL, GL_STATIC_DRAW);
+			// Allocate buffer data
+			glBufferData(GL_ARRAY_BUFFER, container->verticesCount() * sizeof(struct VBOENTRY), NULL, GL_STATIC_DRAW);
 			
-			// mapovani pameti
-			VBOENTRY* mapping = (VBOENTRY*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			// Bind data pointer to variable
+			struct VBOENTRY* mapping = (struct VBOENTRY*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
-			// naplneni daty
 			for (std::vector<BaseModel*>::iterator modelit = models.begin(); modelit != models.end(); modelit++)
 			{
 				BaseModel* model = (*modelit);
@@ -105,26 +93,27 @@ void Scene::buildBufferObjects()
 						if (mesh->getTexCoords().size() > i)
 							tex = mesh->getTexCoords()[i];
 
-						// zapsat data a posunout ukazatel na nasledujici volne misto
-						VBOENTRY e = {
+						// Write data to pointer
+						struct VBOENTRY e = {
 							vert.x, vert.y, vert.z, 
 							norm.x, norm.y, norm.z,
 							tan.x, tan.y, tan.z,
 							tex.x, tex.y
 						};
-						
+
 						*mapping = e;
 						mapping++;
 					}
 				}
 			}
 
-			// presun dat do graficke pameti
-			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glUnmapBuffer(GL_ARRAY_BUFFER); // Remove pointer to data
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 
-		// EBO ////////////////////////////////////////////////////////////
+		/*
+		 * EBO
+		 */
 		{
 			GLuint ebo;
 			glGenBuffers(1, &ebo);
@@ -170,11 +159,8 @@ void Scene::buildBufferObjects()
 			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);			
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
-		
 	}	
 }
-
-
 
 void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledLights)
 {	
@@ -203,26 +189,21 @@ void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledL
 		}
 	}
 	
-
-	// pohledova matice
 	glm::mat4 mView = application.getCamera()->GetMatrix();
-	
-	// projekcni matice
 	glm::mat4 mProjection = glm::perspective(45.0f, (float)application.getWindowAspectRatio(), 0.1f, 1000.0f);	
 		
 	// samotne kresleni
-	for (unsigned int i = 0; i < containers.size(); i++)
-	{						
+	for (unsigned int i = 0; i < containers.size(); i++) {
+
 		glBindBuffer(GL_ARRAY_BUFFER, VBOs[i]);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[i]);
 
 		// postupne provadet kreslici frontu meshi kontejneru, slozenou z kreslene meshe a jeji matice;
 		// pokud probehla optimalizace, budou meshe navic serazene podle pouzivaneho materialu
 		std::vector<ModelContainer::MESHDRAWINGQUEUEITEM> drawingQueue = containers[i]->getMeshDrawingQueue();
-	
 
-		for (std::vector<ModelContainer::MESHDRAWINGQUEUEITEM>::iterator it = drawingQueue.begin(); it != drawingQueue.end(); it++)
-		{
+		for (std::vector<ModelContainer::MESHDRAWINGQUEUEITEM>::iterator it = drawingQueue.begin(); it != drawingQueue.end(); it++) {
+
 			Mesh* mesh = (*it).mesh;
 			std::string meshMaterial = mesh->getMaterialName();
 
@@ -232,8 +213,8 @@ void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledL
 				meshMaterial = meshMaterial.substr(0, pos);
 
 			// prepinat shadery jen pokud je treba
-			if (activeMaterial != meshMaterial)
-			{
+			if (activeMaterial != meshMaterial) {
+
 				// prepnout na novy shader
 				activeMaterial = meshMaterial;
 				activeBinding = ShaderManager::useProgram(activeMaterial);					
@@ -265,7 +246,7 @@ void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledL
 				// pohledova matice
 				glUniformMatrix4fv(activeBinding.mViewUniform, 1, GL_FALSE, glm::value_ptr(mView));
 
-				// co vsechno se bude kreslit				
+				// co vsechno se bude kreslit
 				glUniform1i(activeBinding.bDrawAmbientUniform, drawAmbient);
 				glUniform1i(activeBinding.bDrawDiffSpecUniform, drawLighting);
 			}				
@@ -290,15 +271,15 @@ void Scene::draw(bool drawAmbient, bool drawLighting, std::vector<bool> enabledL
 			unsigned int count = mesh->getFaces().size() * 3;
 			unsigned int offset = containers[i]->getMeshIndexOffset(mesh);
 			
-			glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(offset * sizeof(GLuint)) );			
-		}		
-		
+			glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (void*)(offset * sizeof(GLuint)));
+		}
+
 		// vynuti opetovne nastaveni shaderu pro kazdy kontejner,
 		// muze byt totiz nutne prenastavit ukazatele do bufferu atp.
 		activeMaterial = "?_dummy_?";
 	}	
 
-	// obnovit vychozi binding bufferu
+	// Unbind buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

@@ -88,6 +88,10 @@ SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth
 
 	PrintGLVersion();
 
+    SDL_version ver;
+    SDL_GetVersion(&ver);
+    printf("SDL Version: %d.%d\n", ver.major, ver.minor);
+
 	application = new Game();
     application->onInit(window);
     application->onWindowResized(width, height);

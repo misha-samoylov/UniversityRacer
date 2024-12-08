@@ -14,7 +14,13 @@
 
 #define UNUSED_SHADER_ATTR -1
 
-// forward-declaration; Scene a BaseApp se potrebuji vzajemne znat
+struct VBOENTRY {
+	float x, y, z;		// vertex pos
+	float nx, ny, nz;	// normal
+	float tx, ty, tz;	// tangent
+	float u, v;			// texture pos
+};
+
 class BaseApp;
 
 class Scene

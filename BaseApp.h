@@ -49,7 +49,6 @@ protected:
 	// rozmery viewportu
 	int windowWidth, windowHeight;
 
-	// camera
 	Camera camera;
 
 	// seznam aktualne stisknutych klaves
