@@ -53,8 +53,12 @@ SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth
     //if (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0) throw SDL_Exception();
 
 	// Zapnout antialiasing
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+    glEnable(GL_MULTISAMPLE);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -75,6 +79,7 @@ SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth
 
     SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
     // SDL_GL_DeleteContext(glcontext);
+    // SDL_DestroyWindow(window);
 
 	// Inicializace glew
 	GLenum err = glewInit();
@@ -202,7 +207,7 @@ int main(int argc, char **argv)
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
             throw SDL_Exception();
         
-        SDL_Window *window = Init(800, 600, 24, 24, 8);
+        SDL_Window *window = Init(1024, 768, 24, 24, 8);
 
 		MainLoop(window);
 
