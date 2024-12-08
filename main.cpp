@@ -25,6 +25,7 @@
 #include "Game.h"
 
 BaseApp *application = NULL;
+SDL_GLContext glcontext;
 
 void PrintGLVersion()
 {
@@ -62,24 +63,20 @@ SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-    //SDL_GL_SetAttribute(
-    //    SDL_GL_CONTEXT_PROFILE_MASK,
-    //    SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     // Create window
-    SDL_Window* screen = SDL_CreateWindow("University Racer X",
+    SDL_Window* window = SDL_CreateWindow("University Racer X",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         width, height,
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
     );
 
-    if (screen == NULL)
+    if (window == NULL)
         throw SDL_Exception();
 
-    SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
-    // SDL_GL_DeleteContext(glcontext);
-    // SDL_DestroyWindow(window);
+    glcontext = SDL_GL_CreateContext(window);
 
 	// Inicializace glew
 	GLenum err = glewInit();
@@ -92,10 +89,10 @@ SDL_Window* Init(unsigned width, unsigned height, unsigned color, unsigned depth
 	PrintGLVersion();
 
 	application = new Game();
-    application->onInit(screen);
+    application->onInit(window);
     application->onWindowResized(width, height);
 
-    return screen;	
+    return window;	
 }
 
 void MainLoop(SDL_Window *window)
@@ -203,11 +200,13 @@ int main(int argc, char **argv)
 #endif
 #endif
 
+    SDL_Window* window;
+
 	try {
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
             throw SDL_Exception();
         
-        SDL_Window *window = Init(1024, 768, 24, 24, 8);
+        window = Init(1024, 768, 24, 24, 8);
 
 		MainLoop(window);
 
@@ -217,6 +216,9 @@ int main(int argc, char **argv)
         printf("ERROR : %s\n", ex.what());
 		return 1;
     }
+
+    SDL_GL_DeleteContext(glcontext);
+    SDL_DestroyWindow(window);
 
 	SDL_Quit();
 
