@@ -57,8 +57,8 @@ void Camera::Aim(float vertical_angle, float horizontal_angle)
 
 glm::mat4 Camera::GetMatrix()
 {
-	glm::mat4 m = glm::gtx::transform2::lookAt(eye, target + eye, up);
-	return m;	
+    glm::mat4 m = glm::lookAt(eye, target + eye, up);
+	return m;
 }
 
 void Camera::DebugDump()

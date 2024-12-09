@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\misha\Downloads\bullet-2.79-rev2440\bullet-2.79\src;C:\Users\misha\Downloads\glew-2.2.0-win32\glew-2.2.0\include;C:\Users\misha\Downloads\glm-0.9.0.7\glm;C:\Users\misha\Documents\GitHub\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\misha\Downloads\bullet-2.79-rev2440\bullet-2.79\src;C:\Users\misha\Downloads\glew-2.2.0-win32\glew-2.2.0\include;C:\Users\misha\Downloads\glm-0.9.3.4;C:\Users\misha\Documents\GitHub\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

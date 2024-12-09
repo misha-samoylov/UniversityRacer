@@ -33,7 +33,7 @@ Controls:
 
 * [SDL 2.31](https://github.com/libsdl-org/SDL/tree/SDL2)
 * [Bullet Physics 2.79 (rev2440)](https://code.google.com/archive/p/bullet/downloads)
-* [glm 0.9.0.7](https://github.com/g-truc/glm/releases/tag/0.9.0.7)
+* [glm 0.9.3.4](https://github.com/g-truc/glm/releases/tag/0.9.3.4)
 * [glew 2.2.0](https://github.com/nigels-com/glew/releases/tag/glew-2.2.0)
 
 # License
