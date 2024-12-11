@@ -1,17 +1,14 @@
 # UniversityRacerX
 
-UniversityRacerX - simple racing game for educational purpose of working with computer science. This project is a fork [UniversityRacer](https://github.com/david-sabata/UniversityRacer) designed to improve the code.
+UniversityRacerX - simple racing game for educational purpose of working with computer science. Drive an RC car model through given checkpoints on the track in the shortest time. This project is a improved [UniversityRacer](https://github.com/david-sabata/UniversityRacer).
 
 # Build
 
 1. Download and build dependencies
-2. Open `UniversityRacerX.sln` and build project
+2. Install Visual Studio 2010
+3. Open and build `UniversityRacerX.sln`
 
-# Game
-
-Drive an RC car model through given checkpoints on the track in the shortest time.
-
-Controls:
+# Controls
 
 * `W`, `A`, `S`, `D` - control vehicle
 * `Space` - handbrake
